@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.example.tm_rentacar.enums.CarStatus;
 import com.example.tm_rentacar.enums.CarType;
 
 import jakarta.persistence.Column;
@@ -45,8 +46,9 @@ public class Car {
 	@Column(name = "rental_rate")
 	private BigDecimal rentalRate;
 	
+	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
-	private Boolean status;
+	private CarStatus status;
 	
 	@OneToMany(mappedBy = "car")
 	private List<CarImage> images;

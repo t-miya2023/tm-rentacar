@@ -20,7 +20,7 @@ public class WebSecurityConfig {
 			// ----------- アクセス許可に関する設定-----------------
 			.authorizeHttpRequests((requests) -> requests 
 					.requestMatchers("/", "/css/**", "/images/**", "/js/**", "/strage/**", "/signup/**").permitAll()//全ユーザーにアクセスを許可するURL 
-							//requestMatchers("ルートパス").hasRole("ロール名") 指定のロールにのみアクセス許可
+					.requestMatchers("/admin/**").hasRole("ADMIN") // 管理者にのみアクセスを許可するURL
 					.anyRequest().authenticated()//上記以外のURLはログインが必要（ロール問わず）
 			)
 			// ------------ログインに関する設定-------------------
