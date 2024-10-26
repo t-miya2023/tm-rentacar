@@ -15,7 +15,13 @@
 						<div class="col-xxl-9 col-xl-10 col-lg-11">
 							<h1 class="mb-4 text-center">車両一覧</h1>
 							
-							<div class="d-flex justify-content-end">
+							<div class="d-flex justify-content-between align-items-end flex-wrap">
+								<form method="get" th:action="@{/admin/cars}" class="mb-3">
+									<div class="input-group">
+										<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="車種名">
+										<button type="submit" class="btn text-white shadow-sm tm-btn">検索</button>
+									</div>
+								</form>
 								<a href="#" class="btn text-white shadow-sm mb-3 tm-btn">登録</a>
 							</div>
 							
@@ -41,6 +47,28 @@
 									</tr>
 								</tbody>
 							</table>
+							
+							<div th:if="${cars.getTotalPages() > 1}" class="d-flex justify-content-center">
+								<nav aria-label="車両一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${cars.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${cars.isFirst()}" th:href="@{/admin/cars(page = ${cars.getNumber() - 1}, keyword = ${keyword})}" class="page-link tm-page-link">前</a>
+										</li>
+										
+										<li th:each="i : ${#numbers.sequence(0, cars.getTotalPages() - 1)}" class="page-item">
+											<span th:if="${i == cars.getNumber()}" class="page-link active tm-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == cars.getNumber()}" th:href="@{/admin/cars(page = ${i}, keyword = ${keyword})}" class="page-link tm-page-link" th:text="${i + 1}"></a>
+										</li>
+										
+										<li class="page-item">
+											<span th:if="${cars.isLast()}" class="page-link disabled">後</span>
+											<a th:unless="${cars.isLast()}" th:href="@{/admin/cars(page = ${cars.getNumber() + 1}, keyword = ${keyword})}" class="page-link tm-page-link">後</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+							
 						</div>
 					</div>
                 </div>

@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -33,6 +34,7 @@ public class AdminCarControllerTest {
 	}
 	
 	@Test
+	@Transactional
 	@WithUserDetails("test@test.com")
 	public void 管理者が管理者用車両一覧ページにアクセスした場合は正しく表示される() throws Exception {
 		mockMvc.perform(get("/admin/cars"))
