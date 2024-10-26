@@ -58,6 +58,6 @@ public class AdminCarsController {
 		Car car = optionalCar.get();
 		model.addAttribute("car", car);
 		
-		return "admin/cars.show";
+		return "admin/cars/show";
 	}
 }

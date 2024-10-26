@@ -25,6 +25,10 @@
 								<a href="#" class="btn text-white shadow-sm mb-3 tm-btn">登録</a>
 							</div>
 							
+							<diV th:if="${errorMessage}" class="alert alert-danger">
+								<span th:text="${errorMessage}"></span>
+							</diV>
+							
 							<table class="table">
 								<thead>
 									<tr>
@@ -43,7 +47,7 @@
 										<td th:text="${car.model}"></td>
 										<td th:text="${car.licensePlate}"></td>
 										<td th:text="${car.status.value}"></td>
-										<td><a href="#">詳細</a></td>
+										<td><a th:href="@{/admin/cars/__${car.id}__}">詳細</a></td>
 									</tr>
 								</tbody>
 							</table>
