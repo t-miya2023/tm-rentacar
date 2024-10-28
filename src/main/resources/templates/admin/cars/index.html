@@ -22,8 +22,12 @@
 										<button type="submit" class="btn text-white shadow-sm tm-btn">検索</button>
 									</div>
 								</form>
-								<a href="#" class="btn text-white shadow-sm mb-3 tm-btn">登録</a>
+								<a th:href="@{/admin/cars/register}" class="btn text-white shadow-sm mb-3 tm-btn">登録</a>
 							</div>
+							
+							<diV th:if="${successMessage}" class="alert alert-success">
+								<span th:text="${successMessage}"></span>
+							</diV>							
 							
 							<diV th:if="${errorMessage}" class="alert alert-danger">
 								<span th:text="${errorMessage}"></span>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<head>
+		<div th:replace="~{fragment :: meta}"></div>
+		<div th:replace="~{fragment :: link}"></div>
+		<title>TMレンタカー | 車両登録</title>
+	</head>
+	<body>
+		<div class="tm-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+			
+			<main>
+				<div class="container pt-4 pb-5 tm-container">
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0">
+									<li class="breadcrumb-item"><a th:href="@{/admin/cars}">車両一覧</a></li>
+									<li class="breadcrumb-item active" aria-current="page">車両登録</li>
+								</ol>
+							</nav>
+							
+							<h1 class="mb-4 text-center">車両登録</h1>
+							
+							<form method="post" th:action="@{/admin/cars/create}" th:object="${carRegisterForm}" enctype="multipart/form-data">
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="make" class="col-form-label text-md-left fw-bold">メーカー</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('make')}" class="text-danger small mb-2" th:errors="*{make}"></div>
+										<input type="text" class="form-control" th:field="*{make}" autofocus placeholder="Toyota">
+									</div>
+								</div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="model" class="col-form-label text-md-left fw-bold">車種名</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('model')}" class="text-danger small mb-2" th:errors="*{model}"></div>
+										<input type="text" class="form-control" th:field="*{model}" placeholder="Priuse">
+									</div>
+								</div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="year" class="col-form-label text-md-left fw-bold">年式</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('year')}" class="text-danger small mb-2" th:errors="*{year}"></div>
+										<input type="text" class="form-control" th:field="*{year}"  placeholder="2024">
+									</div>
+								</div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="licensePlate" class="col-form-label text-md-left fw-bold">ナンバープレート</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('licensePlate')}" class="text-danger small mb-2" th:errors="*{licensePlate}"></div>
+										<input type="text" class="form-control" th:field="*{licensePlate}"  placeholder="品川300 あ 12-34">
+									</div>
+								</div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="type" class="col-form-label text-md-left fw-bold">ボディタイプ</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('type')}" class="text-danger small mb-2" th:errors="*{type}"></div>
+										<select th:field="*{type}" class="form-control">
+											<option value="" disabled selected>ボディタイプを選択してください。</option>
+											<option th:each="t : ${carType}" th:value="${t}" th:text="${t.name}"></option>
+										</select>
+									</div>
+								</div>								
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="rentalRate" class="col-form-label text-md-left fw-bold">レンタル料金(1時間あたり)</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('rentalRate')}" class="text-danger small mb-2" th:errors="*{rentalRate}"></div>
+										<input type="number" class="form-control" th:field="*{rentalRate}" placeholder="1000">
+									</div>
+								</div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="status" class="col-form-label text-md-left fw-bold">状態</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('status')}" class="text-danger small mb-2" th:errors="*{status}"></div>
+										<select th:field="*{status}" class="form-control">
+											<option value="" disabled selected>状態を選択してください。</option>
+											<option th:each="s : ${carStatus}" th:value="${s}" th:text="${s.value}"></option>
+										</select>
+									</div>
+								</div>
+								
+								<!-- 選択された画像の表示場所 -->
+								<div class="row" id="imagePreview"></div>
+								
+								<div class="form-group row mb-3">
+									<div class="col-md-4">
+										<label for="imageFiles" class="col-form-label text-md-left fw-bold">画像</label>
+									</div>
+									<div class="col-md-8">
+										<div th:if="${#fields.hasErrors('imageFiles')}" class="text-danger small mb-2" th:errors="*{imageFiles}"></div>
+										<input type="file" class="form-control" th:field="*{imageFiles}" multiple>
+									</div>
+								</div>
+								
+								<div class="d-flex justify-content-center my-4">
+									<button type="submit" class="btn btn-primary">登録</button>
+								</div>
+								
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</main>
+			
+			<div th:replace="~{fragment :: footer}"></div>
+		</div>
+		
+		<div th:replace="~{fragment :: scripts}"></div>
+	</body>
+</html>

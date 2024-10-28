@@ -8,13 +8,20 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tm_rentacar.entity.Car;
+import com.example.tm_rentacar.enums.CarStatus;
+import com.example.tm_rentacar.enums.CarType;
+import com.example.tm_rentacar.form.CarRegisterForm;
 import com.example.tm_rentacar.service.CarService;
 
 @Controller
@@ -59,5 +66,34 @@ public class AdminCarsController {
 		model.addAttribute("car", car);
 		
 		return "admin/cars/show";
+	}
+	
+	@GetMapping("/register")
+	public String register(Model model) {
+		model.addAttribute("carRegisterForm", new CarRegisterForm());
+		model.addAttribute("carType", CarType.values());
+		model.addAttribute("carStatus", CarStatus.values());
+		
+		return "admin/cars/register";
+	}
+	
+	@PostMapping("/create")
+	public String create(@ModelAttribute @Validated CarRegisterForm carRegisterForm,
+						BindingResult bindingResult,
+						RedirectAttributes redirectAttributes,
+						Model model)
+	{
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("carRegisterForm", carRegisterForm);
+			model.addAttribute("carType", CarType.values());
+			model.addAttribute("carStatus", CarStatus.values());
+			
+			return "admin/cars/register";
+		}
+		
+		carService.createCar(carRegisterForm);
+		redirectAttributes.addFlashAttribute("successMessage", "車両登録が完了しました。");
+		
+		return "redirect:/admin/cars";
 	}
 }
