@@ -100,8 +100,7 @@
 									</div>
 								</div>
 								
-								<!-- 選択された画像の表示場所 -->
-								<div class="row" id="imagePreview"></div>
+
 								
 								<div class="form-group row mb-3">
 									<div class="col-md-4">
@@ -117,7 +116,8 @@
 									<button type="submit" class="btn btn-primary">登録</button>
 								</div>
 								
-								
+								<!-- 選択された画像の表示場所 -->
+								<div class="row" id="imagePreview"></div>
 							</form>
 						</div>
 					</div>
@@ -128,5 +128,6 @@
 		</div>
 		
 		<div th:replace="~{fragment :: scripts}"></div>
+		<script th:src="@{/js/preview.js}"></script>
 	</body>
 </html>

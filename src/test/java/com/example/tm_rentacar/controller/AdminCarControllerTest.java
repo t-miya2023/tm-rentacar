@@ -20,6 +20,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.tm_rentacar.entity.Car;
+import com.example.tm_rentacar.enums.CarStatus;
+import com.example.tm_rentacar.enums.CarType;
 import com.example.tm_rentacar.service.CarService;
 
 @SpringBootTest
@@ -124,7 +127,7 @@ public class AdminCarControllerTest {
 					fileBytes
 				);
 			
-			mockMvc.perform(MockMvcRequestBuilders.multipart("admin/cars/create").file(imageFile)
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/admin/cars/create").file(imageFile)
 					.with(csrf())
 					.param("make", "テストメーカー")
 					.param("model", "テストカー")
@@ -140,6 +143,91 @@ public class AdminCarControllerTest {
 			long countAfter = carService.countCars();
 			//レコード数が変わらないことを検証
 			assertThat(countAfter).isEqualTo(countBefore);
+		}
+		
+		@Test
+		@WithUserDetails("testuser@test.com")
+		@Transactional
+		public void 一般ユーザーとしてログインしている場合は登録せずに403エラーが発生する() throws Exception {
+			//テスト前のデータ数
+			long countBefore = carService.countCars();
+			
+			//テスト用の画像ファイルデータ
+			Path filePath = Paths.get("src/main/resources/static/storage/test.jpg");
+			String fileName = filePath.getFileName().toString();
+			String fileType = Files.probeContentType(filePath);
+			byte[] fileBytes = Files.readAllBytes(filePath);
+			
+			MockMultipartFile imageFile = new MockMultipartFile(
+					"imageFile",
+					fileName, 
+					fileType,
+					fileBytes
+				);
+			
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/admin/cars/create").file(imageFile)
+					.with(csrf())
+					.param("make", "テストメーカー")
+					.param("model", "テストカー")
+					.param("year", "2024")
+					.param("licensePlate", "品川 あ 12-34")
+					.param("type", "セダン")
+					.param("rentalRate", "1000")
+					.param("status", "利用可"))
+				.andExpect(status().isForbidden());
+			
+			//テスト後のレコード数
+			long countAfter = carService.countCars();
+			//レコード数が変わらないことを検証
+			assertThat(countAfter).isEqualTo(countBefore);
+		}
+		
+		@Test
+		@WithUserDetails("test@test.com")
+		@Transactional
+		public void 管理者としてログイン済みの場合登録後に車両一覧ページへリダイレクト() throws Exception {
+			//テスト前のデータ数
+			long countBefore = carService.countCars();
+			
+			//テスト用の画像ファイルデータ
+			Path filePath = Paths.get("src/main/resources/static/storage/test.jpg");
+			String fileName = filePath.getFileName().toString();
+			String fileType = Files.probeContentType(filePath);
+			byte[] fileBytes = Files.readAllBytes(filePath);
+			
+			MockMultipartFile imageFile = new MockMultipartFile(
+					"imageFiles",
+					fileName, 
+					fileType,
+					fileBytes
+				);
+			
+			mockMvc.perform(MockMvcRequestBuilders.multipart("/admin/cars/create").file(imageFile)
+					.with(csrf())
+					.param("make", "テストメーカー")
+					.param("model", "テストカー")
+					.param("year", "2024")
+					.param("licensePlate", "品川 あ 12-34")
+					.param("type", "SEDAN")
+					.param("rentalRate", "1000")
+					.param("status", "AVAILABLE"))
+				.andExpect(status().is3xxRedirection())
+				.andExpect(redirectedUrl("/admin/cars"));
+			
+			//テスト後のレコード数
+			long countAfter = carService.countCars();
+			//レコード数が1増加していることを検証
+			assertThat(countAfter).isEqualTo(countBefore + 1);
+			
+			//さらに追加されたテストデータが一致していることを検証
+			Car car = carService.findFirstCarByOrderByIdDesc();
+			assertThat(car.getMake()).isEqualTo("テストメーカー");
+			assertThat(car.getModel()).isEqualTo("テストカー");
+			assertThat(car.getYear()).isEqualTo("2024");
+			assertThat(car.getLicensePlate()).isEqualTo("品川 あ 12-34");
+			assertThat(car.getType()).isEqualTo(CarType.SEDAN);
+			assertThat(car.getRentalRate()).isEqualTo("1000");
+			assertThat(car.getStatus()).isEqualTo(CarStatus.AVAILABLE);
 		}
 
 }

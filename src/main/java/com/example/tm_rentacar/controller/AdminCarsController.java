@@ -22,12 +22,14 @@ import com.example.tm_rentacar.entity.Car;
 import com.example.tm_rentacar.enums.CarStatus;
 import com.example.tm_rentacar.enums.CarType;
 import com.example.tm_rentacar.form.CarRegisterForm;
+import com.example.tm_rentacar.form.CarUpdateForm;
 import com.example.tm_rentacar.service.CarService;
 
 @Controller
 @RequestMapping("/admin/cars")
 public class AdminCarsController {
 	private final CarService carService;
+
 	
 	public AdminCarsController(CarService carService) {
 		this.carService = carService;
@@ -95,5 +97,27 @@ public class AdminCarsController {
 		redirectAttributes.addFlashAttribute("successMessage", "車両登録が完了しました。");
 		
 		return "redirect:/admin/cars";
+	}
+	
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable(name = "id") Integer id,
+				RedirectAttributes redirectAttributes,
+				Model model)
+	{
+		Optional<Car> optionalCar = carService.findCarById(id);
+		
+		if(optionalCar.isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "対象の車両が存在しません。");
+			
+			return "redirect:/admin/cars";
+		}
+		
+		Car car = optionalCar.get();
+		CarUpdateForm carUpdateForm = new CarUpdateForm(car.getMake(), car.getModel(), car.getYear(), car.getLicensePlate(), car.getType(), car.getRentalRate(), car.getStatus(), null);
+		
+		model.addAttribute("car", car);
+		model.addAttribute("carUpdateForm", carUpdateForm);
+		
+		return "admin/house.edit";
 	}
 }

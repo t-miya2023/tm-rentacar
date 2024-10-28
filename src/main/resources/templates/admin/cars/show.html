@@ -29,8 +29,37 @@
 							</div>
 							
 							<div class="mb-3">
-								<!--画像を入れる-->
-								<img th:src="@{/images/no_images.png}" class="w-100" alt="No Image">
+								<div th:unless="${#lists.isEmpty(car.images)}" id="carouselExampleIndicators" class="carousel slide">
+								  <div class="carousel-indicators">
+									  <!--インジケータ-->
+								    <button type="button" data-bs-target="#carouselExampleIndicators" 
+								    		th:each="image, iterStat : ${car.images}"
+								    		th:data-bs-slide-to="${iterStat.index}" 
+								    		th:classappend="${iterStat.index == 0} ? 'active'" 
+								    		th:aria-current="${iterStat.index == 0} ? 'true'" 
+								    		th:aria-label="'Slide ' + ${iterStat.index + 1}">
+								    </button>
+								    
+								  </div>
+								  
+								  <div class="carousel-inner">
+									  <!--画像-->
+								    <div class="carousel-item" th:each="image, iterStat : ${car.images}"
+								    		th:classappend="${iterStat.index == 0} ? 'active'">
+								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100" alt="...">
+								    </div>
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+								</div>
+								<!--画像が登録されていない場合-->
+								<img th:if="${#lists.isEmpty(car.images)}" th:src="@{/images/no_images.png}" class="w-100" alt="No Image">
 							</div>
 							
 							<div class="container mb-4">

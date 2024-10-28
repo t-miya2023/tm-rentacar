@@ -2,13 +2,15 @@ const imageInput = document.getElementById('imageFiles');
 const imagePreview = document.getElementById('imagePreview');
 
 imageInput.addEventListener('change', () => {
-	if(imageInput.files[0]){
-		let fileReader = new FileReader();
-		fileReader.onload = () => {
-			imagePreview.innerHTML = `<img src="${fileReader.result}" class="mb-3">`
-		}
-		fileReader.readAsDataURL(imageInput.file[0]);
-	}else{
-		imagePreview.innerHTML = '';
+	imagePreview.innerHTML = '';
+	
+	if(imageInput.files.length > 0){
+		Array.from(imageInput.files).forEach(file => {
+			let fileReader = new FileReader();
+			fileReader.onload = () => {
+				imagePreview.innerHTML += `<img src="${fileReader.result}" class="mb-3">`
+			}
+			fileReader.readAsDataURL(file);
+		});
 	}
 })

@@ -61,7 +61,6 @@ public class CarService {
 	@Transactional
 	public void createCar(CarRegisterForm carRegisterForm) {
 		Car car = new Car();
-
 		
 		car.setMake(carRegisterForm.getMake());
 		car.setModel(carRegisterForm.getModel());
