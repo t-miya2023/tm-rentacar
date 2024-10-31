@@ -117,7 +117,9 @@ public class AdminCarsController {
 		
 		model.addAttribute("car", car);
 		model.addAttribute("carUpdateForm", carUpdateForm);
+		model.addAttribute("carType", CarType.values());
+		model.addAttribute("carStatus", CarStatus.values());
 		
-		return "admin/house.edit";
+		return "admin/cars/edit";
 	}
 }
