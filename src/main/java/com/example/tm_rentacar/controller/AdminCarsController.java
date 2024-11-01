@@ -6,10 +6,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,16 +25,18 @@ import com.example.tm_rentacar.enums.CarStatus;
 import com.example.tm_rentacar.enums.CarType;
 import com.example.tm_rentacar.form.CarRegisterForm;
 import com.example.tm_rentacar.form.CarUpdateForm;
+import com.example.tm_rentacar.service.CarImageService;
 import com.example.tm_rentacar.service.CarService;
 
 @Controller
 @RequestMapping("/admin/cars")
 public class AdminCarsController {
 	private final CarService carService;
-
+	private final CarImageService carImageService;
 	
-	public AdminCarsController(CarService carService) {
+	public AdminCarsController(CarService carService, CarImageService carImageService) {
 		this.carService = carService;
+		this.carImageService = carImageService;
 	}
 	
 	@GetMapping
@@ -122,4 +126,11 @@ public class AdminCarsController {
 		
 		return "admin/cars/edit";
 	}
+	
+	@DeleteMapping("/images/{id}/delete")
+	public ResponseEntity<Void> deleteImage(@PathVariable(name = "id") Integer id) {
+	    carImageService.deleteCarImageById(id);  // IDに基づき画像を削除
+	    return ResponseEntity.ok().build();
+	}
+
 }

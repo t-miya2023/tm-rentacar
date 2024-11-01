@@ -2,6 +2,8 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 	<head>
 		<div th:replace="~{fragment :: meta}"></div>
+		    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 		<div th:replace="~{fragment :: link}"></div>
 		<title>TMレンタカー | 車両情報編集</title>
 	</head>
@@ -120,7 +122,14 @@
 								<!-- 選択された画像の表示場所 -->
 								<div class="row" id="imagePreview"></div>
 									<div th:unless="${#lists.isEmpty(car.images)}">
-								      	<img th:each="image, iterStat : ${car.images}" th:src="@{/storage/__${image.imageUrl}__}" class="row w-100 mb-2" alt="...">
+										<div th:each="image, iterStat : ${car.images}" >
+											<img th:src="@{/storage/__${image.imageUrl}__}" class="row w-100 mb-2" alt="...">
+									<!-- 削除ボタン（非同期で動作するように設定） -->
+									        <button type="button" class="btn btn-danger mt-2" 
+									                th:onclick="deleteImage([[${image.id}]])">削除</button>
+										</div>
+								      	
+								    	
 								    </div>
 								
 							</form>
@@ -134,5 +143,6 @@
 		
 		<div th:replace="~{fragment :: scripts}"></div>
 		<script th:src="@{/js/preview.js}"></script>
+		<script th:src="@{/js/deleteImage.js}"></script>
 	</body>
 </html>
