@@ -122,16 +122,15 @@
 								<!-- 選択された画像の表示場所 -->
 								<div class="row" id="imagePreview"></div>
 									<div th:unless="${#lists.isEmpty(car.images)}">
-										<div th:each="image, iterStat : ${car.images}" >
-											<img th:src="@{/storage/__${image.imageUrl}__}" class="row w-100 mb-2" alt="...">
-									<!-- 削除ボタン（非同期で動作するように設定） -->
-									        <button type="button" class="btn btn-danger mt-2" 
-									                th:onclick="deleteImage([[${image.id}]])">削除</button>
+										<div th:each="image : ${car.images}">
+											<div class="image-item d-flex flex-column" th:attr="data-image-id=${image.id}">
+												<img th:src="@{/storage/__${image.imageUrl}__}" class="row w-100 mb-2" alt="...">
+												<!-- 削除ボタン（非同期で動作するように設定） -->
+										        <button type="button" class="btn btn-danger mb-2 ms-auto" 
+										                th:onclick="deleteImage([[${image.id}]])">削除</button>
+											</div>
 										</div>
-								      	
-								    	
 								    </div>
-								
 							</form>
 						</div>
 					</div>

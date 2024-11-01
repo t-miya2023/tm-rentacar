@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tm_rentacar.entity.Car;
 import com.example.tm_rentacar.form.CarRegisterForm;
+import com.example.tm_rentacar.form.CarUpdateForm;
 import com.example.tm_rentacar.repository.CarRepository;
 
 @Service
@@ -67,6 +68,22 @@ public class CarService {
 		carImageService.saveCarImages(car, carRegisterForm.getImageFiles());
 		
 	}
+	//updateメソッド
+	@Transactional
+	public void updateCar(CarUpdateForm carUpdateForm, Car car) {
+		car.setMake(carUpdateForm.getMake());
+		car.setModel(carUpdateForm.getModel());
+		car.setYear(carUpdateForm.getYear());
+		car.setLicensePlate(carUpdateForm.getLicensePlate());
+		car.setType(carUpdateForm.getType());
+		car.setRentalRate(carUpdateForm.getRentalRate());
+		car.setStatus(carUpdateForm.getStatus());
+		
+		carRepository.save(car);
 	
+	//画像ファイルがある場合は追加で処理	
+//		car.getImages().clear();
+		carImageService.saveCarImages(car, carUpdateForm.getImageFiles());
+	}
 
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import com.example.tm_rentacar.enums.CarStatus;
 import com.example.tm_rentacar.enums.CarType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -50,7 +51,7 @@ public class Car {
 	@Column(name = "status")
 	private CarStatus status;
 	
-	@OneToMany(mappedBy = "car")
+	@OneToMany(mappedBy = "car", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CarImage> images;
 	
 	@Column(name = "created_at", insertable = false, updatable = false)

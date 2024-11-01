@@ -127,6 +127,34 @@ public class AdminCarsController {
 		return "admin/cars/edit";
 	}
 	
+	@PostMapping("/{id}/update")
+	public String update(@ModelAttribute @Validated CarUpdateForm carUpdateForm,
+						BindingResult bindingResult,
+						@PathVariable(name = "id") Integer id,
+						RedirectAttributes redirectAttributes,
+						Model model)
+	{
+		Optional<Car> optionalCar = carService.findCarById(id);
+		
+		if(optionalCar.isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "対象の車両が存在しません。");
+			
+			return "redirect:/admin/cars";
+		}
+		Car car = optionalCar.get();
+		if(bindingResult.hasErrors()) {
+			model.addAttribute("carUpdateForm", carUpdateForm);
+			model.addAttribute("carType", CarType.values());
+			model.addAttribute("carStatus", CarStatus.values());
+			
+			return "admin/cars/edit";
+		}
+		carService.updateCar(carUpdateForm, car);
+		redirectAttributes.addFlashAttribute("successMessage","車両情報を編集しました。");
+		
+		return "redirect:/admin/cars";
+	}
+	
 	@DeleteMapping("/images/{id}/delete")
 	public ResponseEntity<Void> deleteImage(@PathVariable(name = "id") Integer id) {
 	    carImageService.deleteCarImageById(id);  // IDに基づき画像を削除

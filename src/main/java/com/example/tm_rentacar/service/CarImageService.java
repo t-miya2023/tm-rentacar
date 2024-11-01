@@ -26,17 +26,24 @@ public class CarImageService {
 	//画像登録メソッド
 	public void saveCarImages(Car car, List<MultipartFile> imageFiles){
 		if(!imageFiles.isEmpty()) {
+			
+			List<String> existImageUrls = carImageRepository.findImageUrlsByCarId(car.getId()); 
+			
 			for(MultipartFile imageFile : imageFiles) {
 				String imageName = imageFile.getOriginalFilename();
 				String hashedImageName = generateNewFileName(imageName);
 				Path filePath = Paths.get("src/main/resources/static/storage/" + hashedImageName);
-				copyImageFile(imageFile, filePath);
 				
-				CarImage carImage = new CarImage();
-				carImage.setCar(car);
-				carImage.setImageUrl(hashedImageName);
-				
-				carImageRepository.save(carImage);
+				//既に同じ画像が登録されていなければ
+				if(!existImageUrls.contains(hashedImageName) && !hashedImageName.isEmpty()) {
+					copyImageFile(imageFile, filePath);
+					
+					CarImage carImage = new CarImage();
+					carImage.setCar(car);
+					carImage.setImageUrl(hashedImageName);
+					
+					carImageRepository.save(carImage);
+				}
 			}
 		}
 	}
