@@ -155,6 +155,22 @@ public class AdminCarsController {
 		return "redirect:/admin/cars";
 	}
 	
+	@PostMapping("/{id}/delete")
+	public String delete(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes) {
+		Optional<Car> optionalCar = carService.findCarById(id);
+		
+		if(optionalCar.isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "対象車両が存在しません。");
+			
+			return "redirect:/admin/cars";
+		}
+		Car car = optionalCar.get();
+		carService.deleteCar(car);
+		redirectAttributes.addFlashAttribute("successMessage", "対象車両を削除しました。");
+		
+		return "redirect:/admin/cars";
+	}
+	
 	@DeleteMapping("/images/{id}/delete")
 	public ResponseEntity<Void> deleteImage(@PathVariable(name = "id") Integer id) {
 	    carImageService.deleteCarImageById(id);  // IDに基づき画像を削除

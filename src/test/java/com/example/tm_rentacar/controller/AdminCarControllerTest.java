@@ -376,4 +376,34 @@ public class AdminCarControllerTest {
 			assertThat(car.getRentalRate()).isEqualTo("1000");
 			assertThat(car.getStatus()).isEqualTo(CarStatus.AVAILABLE);
 		}
+//delete---------------------------------------------------------------------------
+		@Test
+		@Transactional
+		public void 未ログインの場合は車両を削除せずにログインページにリダイレクトする() throws Exception{
+			mockMvc.perform(post("/admin/cars/1/delete").with(csrf()))
+					.andExpect(status().is3xxRedirection())
+					.andExpect(redirectedUrl("http://localhost/login"));
+			Optional<Car> optionalCar = carService.findCarById(1);
+			assertThat(optionalCar).isPresent();
+		}
+		
+		@Test
+		@WithUserDetails("testuser@test.com")
+		public void 一般ユーザーの場合車両を削除せずに403エラーが発生する() throws Exception{
+			mockMvc.perform(post("/admin/cars/1/delete").with(csrf()))
+					.andExpect(status().isForbidden());
+			Optional<Car> optionalCar = carService.findCarById(1);
+			assertThat(optionalCar).isPresent();
+		}
+		
+		@Test
+		@Transactional
+		@WithUserDetails("test@test.com")
+		public void 管理者の場合は車両削除後に一覧へリダイレクトする() throws Exception{
+			mockMvc.perform(post("/admin/cars/1/delete").with(csrf()))
+					.andExpect(status().is3xxRedirection())
+					.andExpect(redirectedUrl("/admin/cars"));
+			Optional<Car> optionalCar = carService.findCarById(1);
+			assertThat(optionalCar).isEmpty();
+		}	
 }

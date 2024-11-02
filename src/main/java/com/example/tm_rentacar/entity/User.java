@@ -40,7 +40,7 @@ public class User {
 	private String email;
 	
 	@Column(name = "license_number")
-	private String licenseNmber;
+	private String licenseNumber;
 	
 	@Column(name = "password")
 	private String password;

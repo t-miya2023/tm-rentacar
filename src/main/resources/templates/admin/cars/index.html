@@ -42,6 +42,7 @@
 										<th scope="col">ナンバー</th>
 										<th scope="col">状態</th>
 										<th scope="col"></th>
+										<th scope="col"></th>
 									</tr>
 								</thead>
 								<tbody>
@@ -52,6 +53,24 @@
 										<td th:text="${car.licensePlate}"></td>
 										<td th:text="${car.status.value}"></td>
 										<td><a th:href="@{/admin/cars/__${car.id}__}">詳細</a></td>
+										<td><a href="#" class="tm-link-danger" data-bs-toggle="modal" th:data-bs-target="${'#deleteCarModal' + car.id}">削除</a></td>
+										<!--削除用モーダル-->
+										<div class="modal fade" th:id="${'deleteCarModal' + car.id}" tabindex="-1" th:aria-labelledby="${'deleteCarModalLabel' + car.id}">
+											<div class="modal-dialog">
+												<div class="modal-content">
+													<div class="modal-header">
+														<h5 class="modal-title" th:id="${'deleteCarModalLabel' + car.id}" th:text="${car.model + 'を削除してよろしいですか？'}"></h5>
+														<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+													</div>
+													<div class="modal-footer">
+														<form method="post" th:action="@{/admin/cars/__${car.id}__/delete}">
+															<button type="submit" class="btn tm-btn-danger text-white shadow-sm">削除</button>
+														</form>
+													</div>
+												</div>
+											</div>
+										</div>
+									
 									</tr>
 								</tbody>
 							</table>

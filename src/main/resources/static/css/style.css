@@ -68,9 +68,23 @@ h1{
    border-color: #5196a6 !important;
  }
  
+.tm-link-danger{
+	color:#f2594b;
+}
+
+.tm-link-danger:hover{
+	color: #a63c3c;
+}
  
- 
- 
+.tm-btn-danger{
+	background-color: #f2594b !important;
+    transition: 0.1s;
+}
+
+.tm-btn-danger:hover{
+	opacity: 0.8;
+}
+
  @media screen and (min-width: 1400px) {
    .tm-container {
      max-width: 1200px;

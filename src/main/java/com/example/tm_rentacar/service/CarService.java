@@ -85,5 +85,11 @@ public class CarService {
 //		car.getImages().clear();
 		carImageService.saveCarImages(car, carUpdateForm.getImageFiles());
 	}
+	
+	//deleteメソッド
+	@Transactional
+	public void deleteCar(Car car) {
+		carRepository.delete(car);
+	}
 
 }

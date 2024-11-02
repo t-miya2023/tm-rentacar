@@ -35,7 +35,7 @@ public class UserService {
 		user.setAddress(signupForm.getAddress());
 		user.setPhoneNumber(signupForm.getPhoneNumber());
 		user.setEmail(signupForm.getEmail());
-		user.setLicenseNmber(signupForm.getLicenseNumber());
+		user.setLicenseNumber(signupForm.getLicenseNumber());
 		user.setPassword(passwordEncoder.encode(signupForm.getPassword()));
 		user.setRole(role);
 		user.setEnabled(false);
