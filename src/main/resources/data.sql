@@ -3,8 +3,27 @@ INSERT IGNORE INTO roles (id, name) VALUES (1, 'ROLE_GENERAL');
 INSERT IGNORE INTO roles (id, name) VALUES (2, 'ROLE_ADMIN');
 
 /* usersテーブル */
-INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, license_number, password, role_id, enabled) VALUES (1, '管理ユーザー', 'カンリユーザー', '123-4567', '長野県伊那市美篶', '080-1234-5678', 'test@test.com', '999999999999','$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 2, true);
-INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, license_number, password, role_id, enabled) VALUES (2, 'テストユーザー', 'テストユーザー', '123-4567', '長野県伊那市美篶', '080-1234-5678', 'testuser@test.com', '999999999999','$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true);
+INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number, email, license_number, password, role_id, enabled) VALUES
+(1, '管理ユーザー', 'カンリユーザー', '123-4567', '長野県伊那市美篶', '080-1234-5678', 'test@test.com', '999999999999','$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 2, true),
+(2, 'テストユーザー', 'テストユーザー', '123-4567', '長野県伊那市美篶', '080-1234-5678', 'testuser@test.com', '999999999999','$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(3, '山田太郎', 'ヤマダタロウ', '150-0001', '東京都渋谷区神宮前', '080-3333-4444', 'yamada@test.com', '777777777777', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(4, '佐藤花子', 'サトウハナコ', '060-0005', '北海道札幌市中央区北五条西', '080-5555-6666', 'sato@test.com', '666666666666', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(5, '鈴木一郎', 'スズキイチロウ', '530-0001', '大阪府大阪市北区梅田', '080-7777-8888', 'suzuki@test.com', '555555555555', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(6, '高橋二郎', 'タカハシジロウ', '460-0003', '愛知県名古屋市中区錦', '080-9999-0000', 'takahashi@test.com', '444444444444', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(7, '伊藤美咲', 'イトウミサキ', '980-0001', '宮城県仙台市青葉区中央', '080-1112-3333', 'ito@test.com', '333333333333', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(8, '加藤大輔', 'カトウダイスケ', '810-0001', '福岡県福岡市中央区天神', '080-4444-5555', 'kato@test.com', '222222222222', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(9, '中村陽子', 'ナカムラヨウコ', '730-0011', '広島県広島市中区基町', '080-6666-7777', 'nakamura@test.com', '111111111111', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(10, '小林健', 'コバヤシケン', '980-0811', '宮城県仙台市青葉区一番町', '080-8888-9999', 'kobayashi@test.com', '123456789012', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(11, '森田光', 'モリタヒカル', '064-0809', '北海道札幌市中央区南九条西', '080-1113-2222', 'morita@test.com', '234567890123', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(12, '長谷川真由美', 'ハセガワマユミ', '600-8001', '京都府京都市下京区四条通', '080-3334-4444', 'hasegawa@test.com', '345678901234', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(13, '石井拓', 'イシイタク', '650-0021', '兵庫県神戸市中央区三宮町', '080-5555-6667', 'ishii@test.com', '456789012345', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(14, '渡辺麻衣', 'ワタナベマイ', '330-0845', '埼玉県さいたま市大宮区大門町', '080-7777-8889', 'watanabe@test.com', '567890123456', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(15, '清水浩', 'シミズヒロシ', '812-0012', '福岡県福岡市博多区博多駅中央街', '080-9999-0001', 'shimizu@test.com', '678901234567', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(16, '木村陽子', 'キムラヨウコ', '420-0858', '静岡県静岡市葵区追手町', '080-1114-3333', 'kimura@test.com', '789012345678', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(17, '松本学', 'マツモトマナブ', '980-0014', '宮城県仙台市青葉区花京院', '080-4445-5555', 'matsumoto@test.com', '890123456789', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(18, '原田真', 'ハラダマコト', '060-0042', '北海道札幌市中央区大通西', '080-6667-7777', 'harada@test.com', '901234567890', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(19, '村田直美', 'ムラタナオミ', '310-0021', '茨城県水戸市南町', '080-8889-9999', 'murata@test.com', '012345678901', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
+(20, '吉田大輔', 'ヨシダダイスケ', '790-0012', '愛媛県松山市湊町', '080-1234-5679', 'yoshida@test.com', '109876543210', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true);
 
 -- cars テーブルに10台分のデータを挿入
 INSERT IGNORE INTO cars (id, make, model, year, license_plate, type, rental_rate, status, created_at, updated_at) VALUES
