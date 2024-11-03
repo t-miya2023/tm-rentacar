@@ -1,6 +1,7 @@
 package com.example.tm_rentacar.service;
 
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tm_rentacar.entity.Car;
+import com.example.tm_rentacar.enums.CarType;
 import com.example.tm_rentacar.form.CarRegisterForm;
 import com.example.tm_rentacar.form.CarUpdateForm;
 import com.example.tm_rentacar.repository.CarRepository;
@@ -48,8 +50,23 @@ public class CarService {
 		return carRepository.findFirstByOrderByIdDesc();
 	}
 	
+	//指定されたキーワードを持つ車種を取得（ページネーションあり
+	public Page<Car> findCarByMakeLikeOrModelLike(String makeKeyword, String modelKeyword, Pageable pageable){
+		return carRepository.findByMakeLikeOrModelLike(makeKeyword, modelKeyword, pageable);
+	}
 	
-	//Createメソッド
+	//指定したタイプで絞り込み（ページネーションあり）
+	public Page<Car> findCarByType(CarType type, Pageable pageable){
+		return carRepository.findByType(type, pageable);
+	}
+	
+	//指定された料金以下で絞り込む（ページネーションあり）
+	public Page<Car> findCarByPriceLessThanEqual(BigDecimal price, Pageable pageable){
+		return carRepository.findByPriceLessThsnEqual(price, pageable);
+	}
+	
+	
+//Createメソッド---------------------------------------------------------
 	@Transactional
 	public void createCar(CarRegisterForm carRegisterForm) {
 		Car car = new Car();

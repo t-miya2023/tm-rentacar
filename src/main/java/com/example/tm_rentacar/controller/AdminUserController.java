@@ -54,6 +54,9 @@ public class AdminUserController {
 			redirectAttributes.addFlashAttribute("errorMessage", "ユーザーが存在しません。");
 			return "redirect:/admin/users";
 		}
-		User user
+		User user = optionalUser.get();
+		model.addAttribute("user", user);
+		
+		return "admin/users/show";
 	}
 }
