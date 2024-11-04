@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<div th:replace="~{fragment :: meta}"></div>
+		<div th:replace="~{fragment :: link}"></div>
+        <title>TMレンタカー | 車両一覧</title>
+    </head>
+    <body>
+        <div class="tm-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+
+            <main>
+                <div class="container pb-5 tm-container">
+					<div class="row justify-content-center">
+						<nav class="my-3" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+							<ol class="breadcrumb mb-0">
+								<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+								<li class="breadcrumb-item active" aria-current="page">車両一覧</li>
+							</ol>
+						</nav>
+						
+						<div class="col-xl-3 col-lg-4 col-md-12">
+							<form method="get" th:action="@{/cars}" class="w-100 mb-3">
+								<div class="input-group">
+									<input type="text" class="form-control" name="keyword" th:value="${keyword}" placeholder="メーカー・車種名">
+									<button type="submit" class="btn text-white shadow-sm tm-btn">検索</button>
+								</div>
+							</form>
+							
+							<div class="card mb-3">
+								<div class="card-header">
+									タイプから探す
+								</div>
+								<div class="card-body">
+									<form method="get" th:action="@{/cars}" class="w-100">
+										<div class="form-group mb-3">
+											<select class="form-control form-select" name="type">
+												<option value="" th:selected="${type == ''}">ボディタイプを選択してください。</option>
+												<option th:each="t : ${carType}" th:value="${t}" th:text="${t.name}" th:selected="${type == t}"></option>
+											</select>
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn text-white shadow-sm tm-btn">検索</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							
+							<div class="card mb-3">
+								<div class="card-header">
+									1時間あたりの予算から探す
+								</div>
+								<div class="card-body">
+									<form method="get" th:action="@{/cars}" class="w-100">
+										<div class="form-group@ mb-3">
+											<select class="form-control form-select" name="rentalRate">
+												<option value="">選択してください</option>
+												<option value="1000" th:selected="${rentalRate == 1000}">1000円以内</option>
+												<option value="1500" th:selected="${rentalRate == 1500}">1500円以内</option>
+												<option value="2000" th:selected="${rentalRate == 2000}">2000円以内</option>
+												<option value="2500" th:selected="${rentalRate == 2500}">2500円以内</option>
+												<option value="3000" th:selected="${rentalRate == 3000}">3000円以内</option>
+											</select>
+										</div>
+										<div class="form-group">
+											<button type="submit" class="btn text-white shadow-sm tm-btn">検索</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						
+						<div class="col">
+							<div class="d-flex justify-content-between flex-wrap">
+								<p th:if="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件' + '(' + (carPage.getNumber() + 1) + '/' + carPage.getTotalPages() + 'ページ)'}"></p>
+								<p th:unless="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件'}"></p>
+							</div>
+							
+							<div class="mb-3" th:each="car : ${carPage}">
+								<a href="#" class="link-dark tm-card-link">
+									<div class="card h-100">
+										<div class="row g-0">
+											<div class="col-md-4">
+												<img th:src="@{/images/no_images.png}" class="card-img-top tm-horizontal-card-image" alt="NO IMAGE">
+											</div>
+											<div class="col-md-8">
+												<div class="card-body">
+													<h3 class="card-title mb-3" th:text="${car.model}"></h3>
+													<hr class="mb-3">
+													<p class="card-text mb-2 fs-5">
+														<span th:text="${car.make}"></span>
+													</p>
+													<p class="card-text mb-2">
+														<span th:text="${'年式：' + car.year}"></span>
+													</p>
+													<p class="card-text mb-2">
+														<span th:text="${'タイプ：' + car.type.name}"></span>
+													</p>
+													<p class="card-text">
+														<span th:text="${#numbers.formatInteger(car.rentalRate, 1, 'COMMA') + '円/時間'}"></span>
+													</p>													
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</a>
+							</div>
+							
+							<div th:if="${carPage.getTotalPages() > 1}" class="d-flex justfy-content-center">
+								<nav aria-label="車両一覧ページ">
+									<ul class="pagination">
+										<li class="page-item">
+											<span th:if="${carPage.isFirst()}" class="page-link disabled">前</span>
+											<a th:unless="${carPage.isFirst()}" th:href="@{/cars(page = ${carPage.getNumber() - 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}" class="page-link tm-page-link">前</a>
+										</li>
+										<li class="page-item" th:each="i : ${#numbers.sequence(0, carPage.getTotalPages() - 1)}">
+											<span th:if="${i == carPage.getNumber()}" class="page-link active tm-active" th:text="${i + 1}"></span>
+											<a th:unless="${i == carPage.getNumber()}" th:href="@{/cars(page = ${i},keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}"  class="page-link tm-page-link" th:text="${i + 1}"></a>
+										</li>
+										<li class="page-item">
+											<span th:if="${carPage.isLast()}" class="page-link disabled">次</span>
+											<a th:unless="${carPage.isLast()}" th:href="@{/cars(page = ${carPage.getNumber() + 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}" class="page-link tm-page-link">次</a>
+										</li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+					</div>
+                </div>
+            </main>
+
+			<div th:replace="~{fragment :: footer}"></div>
+        </div>
+
+        <div th:replace="~{fragment :: scripts}"></div>
+    </body>
+</html>

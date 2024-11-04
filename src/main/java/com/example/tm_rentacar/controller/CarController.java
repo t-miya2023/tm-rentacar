@@ -28,7 +28,7 @@ public class CarController {
 	@GetMapping
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 						@RequestParam(name = "type", required = false) CarType type,
-						@RequestParam(name = "price", required = false) BigDecimal price,
+						@RequestParam(name = "rentalRate", required = false) BigDecimal rentalRate,
 						@PageableDefault(page = 0, size = 10, sort =  "id", direction = Direction.ASC) Pageable pageable,
 						Model model)
 	{
@@ -38,8 +38,8 @@ public class CarController {
 			carPage = carService.findCarByMakeLikeOrModelLike(keyword, keyword, pageable);
 		}else if(type != null) {
 			carPage = carService.findCarByType(type, pageable);
-		}else if(price != null) {
-			carPage = carService.findCarByPriceLessThanEqual(price, pageable);
+		}else if(rentalRate != null) {
+			carPage = carService.findCarByRentalRateLessThanEqual(rentalRate, pageable);
 		}else {
 			carPage = carService.findAllCars(pageable);
 		}
@@ -47,7 +47,8 @@ public class CarController {
 		model.addAttribute("carPage", carPage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("type", type);
-		model.addAttribute("price", price);
+		model.addAttribute("rentalRate", rentalRate);
+		model.addAttribute("carType", CarType.values());
 		
 		return "cars/index";
 	}

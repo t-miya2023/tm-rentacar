@@ -61,8 +61,8 @@ public class CarService {
 	}
 	
 	//指定された料金以下で絞り込む（ページネーションあり）
-	public Page<Car> findCarByPriceLessThanEqual(BigDecimal price, Pageable pageable){
-		return carRepository.findByPriceLessThsnEqual(price, pageable);
+	public Page<Car> findCarByRentalRateLessThanEqual(BigDecimal rentalRate, Pageable pageable){
+		return carRepository.findByRentalRateLessThanEqual(rentalRate, pageable);
 	}
 	
 	

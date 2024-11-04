@@ -14,5 +14,5 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 	public Car findFirstByOrderByIdDesc();
 	public Page<Car> findByMakeLikeOrModelLike(String makeKeyword, String modelKeyword, Pageable pageable);
 	public Page<Car> findByType(CarType type, Pageable pageable);
-	public Page<Car> findByPriceLessThsnEqual(BigDecimal price, Pageable pageable);
+	public Page<Car> findByRentalRateLessThanEqual(BigDecimal rentalRate, Pageable pageable);
 }
