@@ -74,6 +74,16 @@
 							<div class="d-flex justify-content-between flex-wrap">
 								<p th:if="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件' + '(' + (carPage.getNumber() + 1) + '/' + carPage.getTotalPages() + 'ページ)'}"></p>
 								<p th:unless="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件'}"></p>
+							
+								<form method="get" th:action="@{/cars}" class="mb-3 tm-sort-box">
+									<input th:if="${keword}" type="hidden" name="keyword" th:value="${keyword}">
+									<input th:if="${type}" type="hidden" name="type" th:value="${type}">
+									<input th:if="${rentalRate}" type="hidden" name="rentalRate" th:value="${rentalRate}">
+									<select class="form-select form-select-sm" name="order" onChange="this.form.submit();">
+										<option value="createdAtDesc" th:selected="${order == 'createdAtDesc' || order == null}">新着順</option>
+										<option value="priceAsc" th:selected="${order == 'priceAsc'}">料金の安い順</option>
+									</select>
+								</form>
 							</div>
 							
 							<div class="mb-3" th:each="car : ${carPage}">
@@ -81,7 +91,8 @@
 									<div class="card h-100">
 										<div class="row g-0">
 											<div class="col-md-4">
-												<img th:src="@{/images/no_images.png}" class="card-img-top tm-horizontal-card-image" alt="NO IMAGE">
+												<img th:if="${!#lists.isEmpty(car.images)}" th:src="@{/storage/__${car.images[0].imageUrl}__}" loading="lazy" class="card-img-top tm-horizontal-card-image" alt="車両画像">
+												<img th:unless="${!#lists.isEmpty(car.images)}" th:src="@{/images/no_images.png}" class="card-img-top tm-horizontal-card-image no-image" alt="NO IMAGE">
 											</div>
 											<div class="col-md-8">
 												<div class="card-body">
@@ -112,15 +123,15 @@
 									<ul class="pagination">
 										<li class="page-item">
 											<span th:if="${carPage.isFirst()}" class="page-link disabled">前</span>
-											<a th:unless="${carPage.isFirst()}" th:href="@{/cars(page = ${carPage.getNumber() - 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}" class="page-link tm-page-link">前</a>
+											<a th:unless="${carPage.isFirst()}" th:href="@{/cars(page = ${carPage.getNumber() - 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate}, order = ${order})}" class="page-link tm-page-link">前</a>
 										</li>
 										<li class="page-item" th:each="i : ${#numbers.sequence(0, carPage.getTotalPages() - 1)}">
 											<span th:if="${i == carPage.getNumber()}" class="page-link active tm-active" th:text="${i + 1}"></span>
-											<a th:unless="${i == carPage.getNumber()}" th:href="@{/cars(page = ${i},keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}"  class="page-link tm-page-link" th:text="${i + 1}"></a>
+											<a th:unless="${i == carPage.getNumber()}" th:href="@{/cars(page = ${i},keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate}, order = ${order})}"  class="page-link tm-page-link" th:text="${i + 1}"></a>
 										</li>
 										<li class="page-item">
 											<span th:if="${carPage.isLast()}" class="page-link disabled">次</span>
-											<a th:unless="${carPage.isLast()}" th:href="@{/cars(page = ${carPage.getNumber() + 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate})}" class="page-link tm-page-link">次</a>
+											<a th:unless="${carPage.isLast()}" th:href="@{/cars(page = ${carPage.getNumber() + 1}, keyword = ${keyword}, type = ${type}, rentalRate = ${rentalRate}, order = ${order})}" class="page-link tm-page-link">次</a>
 										</li>
 									</ul>
 								</nav>

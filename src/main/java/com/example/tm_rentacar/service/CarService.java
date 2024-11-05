@@ -50,21 +50,45 @@ public class CarService {
 		return carRepository.findFirstByOrderByIdDesc();
 	}
 	
-	//指定されたキーワードを持つ車種を取得（ページネーションあり
-	public Page<Car> findCarByMakeLikeOrModelLike(String makeKeyword, String modelKeyword, Pageable pageable){
-		return carRepository.findByMakeLikeOrModelLike(makeKeyword, modelKeyword, pageable);
+	//指定されたキーワードを持つ車種を取得（ページネーションあり),新着順に並び替え
+	public Page<Car> findCarByMakeLikeOrModelLikeOrderByCreatedAtDesc(String makeKeyword, String modelKeyword, Pageable pageable){
+		return carRepository.findByMakeLikeOrModelLikeOrderByCreatedAtDesc(makeKeyword, modelKeyword, pageable);
 	}
 	
-	//指定したタイプで絞り込み（ページネーションあり）
-	public Page<Car> findCarByType(CarType type, Pageable pageable){
-		return carRepository.findByType(type, pageable);
+	//指定されたキーワードを持つ車種を取得（ページネーションあり),料金の安い順に並び替え
+	public Page<Car> findCarByMakeLikeOrModelLikeOrderByRentalRateAsc(String makeKeyword, String modelKeyword, Pageable pageable){
+		return carRepository.findByMakeLikeOrModelLikeOrderByRentalRateAsc(makeKeyword, modelKeyword, pageable);
 	}
 	
-	//指定された料金以下で絞り込む（ページネーションあり）
-	public Page<Car> findCarByRentalRateLessThanEqual(BigDecimal rentalRate, Pageable pageable){
-		return carRepository.findByRentalRateLessThanEqual(rentalRate, pageable);
+	//指定したタイプで絞り込み（ページネーションあり）,新着順に並び替え
+	public Page<Car> findCarByTypeOrderByCreatedAtDesc(CarType type, Pageable pageable){
+		return carRepository.findByTypeOrderByCreatedAtDesc(type, pageable);
 	}
 	
+	//指定したタイプで絞り込み（ページネーションあり）,料金の安い順に並び替え
+	public Page<Car> findCarByTypeOrderByRentalRateAsc(CarType type, Pageable pageable){
+		return carRepository.findByTypeOrderByRentalRateAsc(type, pageable);
+	}
+	
+	//指定された料金以下で絞り込む（ページネーションあり）,新着順に並び替え
+	public Page<Car> findCarByRentalRateLessThanEqualOrderByCreatedAtDesc(BigDecimal rentalRate, Pageable pageable){
+		return carRepository.findByRentalRateLessThanEqualOrderByCreatedAtDesc(rentalRate, pageable);
+	}
+	
+	//指定された料金以下で絞り込む（ページネーションあり）,料金の安い順に並び替え
+	public Page<Car> findCarByRentalRateLessThanEqualOrderByRentalRateAsc(BigDecimal rentalRate, Pageable pageable){
+		return carRepository.findByRentalRateLessThanEqualOrderByRentalRateAsc(rentalRate, pageable);
+	}
+	
+	//全ての車両データをページングされた状態で取得,新着順に並び替え
+	public Page<Car> findAllCarByOrderByCreatedAtDesc(Pageable pageable){
+		return carRepository.findAllByOrderByCreatedAtDesc(pageable);
+	}
+	
+	//全ての車両データをページングされた状態で取得,料金の安い順に並び替え
+	public Page<Car> findAllCarByOrderByRentalRateAsc(Pageable pageable){
+		return carRepository.findAllByOrderByRentalRateAsc(pageable);
+	}
 	
 //Createメソッド---------------------------------------------------------
 	@Transactional

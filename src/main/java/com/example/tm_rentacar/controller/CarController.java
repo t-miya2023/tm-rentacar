@@ -29,26 +29,43 @@ public class CarController {
 	public String index(@RequestParam(name = "keyword", required = false) String keyword,
 						@RequestParam(name = "type", required = false) CarType type,
 						@RequestParam(name = "rentalRate", required = false) BigDecimal rentalRate,
+						@RequestParam(name = "order", required = false) String order,
 						@PageableDefault(page = 0, size = 10, sort =  "id", direction = Direction.ASC) Pageable pageable,
 						Model model)
 	{
 		Page<Car> carPage;
 		
 		if(keyword != null && !keyword.isEmpty()) {
-			carPage = carService.findCarByMakeLikeOrModelLike(keyword, keyword, pageable);
+			if(order != null && order.equals("priceAsc")) {
+				carPage = carService.findCarByMakeLikeOrModelLikeOrderByRentalRateAsc(keyword, keyword, pageable);
+			} else {
+				carPage = carService.findCarByMakeLikeOrModelLikeOrderByCreatedAtDesc(keyword, keyword, pageable);
+			}
 		}else if(type != null) {
-			carPage = carService.findCarByType(type, pageable);
+			if(order != null && order.equals("priceAsc")) {
+				carPage = carService.findCarByTypeOrderByRentalRateAsc(type, pageable);
+			}else {
+				carPage = carService.findCarByTypeOrderByCreatedAtDesc(type, pageable);
+			}
 		}else if(rentalRate != null) {
-			carPage = carService.findCarByRentalRateLessThanEqual(rentalRate, pageable);
+			if(order != null && order.equals("priceAsc")) {
+				carPage = carService.findCarByRentalRateLessThanEqualOrderByRentalRateAsc(rentalRate, pageable);
+			}else {
+				carPage = carService.findCarByRentalRateLessThanEqualOrderByCreatedAtDesc(rentalRate, pageable);
+			}
 		}else {
-			carPage = carService.findAllCars(pageable);
+			if(order != null && order.equals("priceAsc")) {
+				carPage = carService.findAllCarByOrderByRentalRateAsc(pageable);
+			}else {
+				carPage = carService.findAllCarByOrderByCreatedAtDesc(pageable);
+			}			
 		}
-		
 		model.addAttribute("carPage", carPage);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("type", type);
 		model.addAttribute("rentalRate", rentalRate);
 		model.addAttribute("carType", CarType.values());
+		model.addAttribute("order", order);
 		
 		return "cars/index";
 	}

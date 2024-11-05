@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.ToString;
 
 @Entity
 @Table(name = "car_images")
@@ -23,6 +24,7 @@ public class CarImage {
 	
 	@ManyToOne
 	@JoinColumn(name = "car_id")
+	@ToString.Exclude
 	private Car car;
 	
 	@Column(name = "image_url")

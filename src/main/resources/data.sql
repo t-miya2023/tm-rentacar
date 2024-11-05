@@ -25,7 +25,7 @@ INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number
 (19, '村田直美', 'ムラタナオミ', '310-0021', '茨城県水戸市南町', '080-8889-9999', 'murata@test.com', '012345678901', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
 (20, '吉田大輔', 'ヨシダダイスケ', '790-0012', '愛媛県松山市湊町', '080-1234-5679', 'yoshida@test.com', '109876543210', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true);
 
--- cars テーブルに10台分のデータを挿入
+-- cars テーブルに30台分のデータを挿入
 INSERT IGNORE INTO cars (id, make, model, year, license_plate, type, rental_rate, status, created_at, updated_at) VALUES
 (1, 'Toyota', 'Corolla', '2020', '品川　あ　12-34', 'SEDAN', 1000, 'AVAILABLE', NOW(), NOW()),
 (2, 'Honda', 'Civic', '2021', '渋谷　あ　34-12', 'SEDAN', 1100, 'RENTED', NOW(), NOW()),
@@ -57,3 +57,36 @@ INSERT IGNORE INTO cars (id, make, model, year, license_plate, type, rental_rate
 (28, 'Nissan', 'Kicks', '2022', '沖縄　あ　78-90', 'LIGHTVEHICLE', 3700, 'UNDER_MAINTENANCE', NOW(), NOW()),
 (29, 'Honda', 'CR-V', '2023', '群馬　あ　12-34', 'SUV', 3800, 'AVAILABLE', NOW(), NOW()),
 (30, 'Toyota', 'Yaris', '2020', '茨城　あ　34-12', 'COMPACT', 3900, 'RENTED', NOW(), NOW());
+
+-- car_images テーブルに30台分のデータを挿入
+INSERT IGNORE INTO car_images (id, car_id, image_url, created_at) VALUES
+(1, 1, 'car01.jpg', NOW()),
+(2, 2, 'car02.jpg', NOW()),
+(3, 3, 'car03.jpg', NOW()),
+(4, 4, 'car04.jpg', NOW()),
+(5, 5, 'car05.jpg', NOW()),
+(6, 6, 'car06.jpg', NOW()),
+(7, 7, 'car07.jpg', NOW()),
+(8, 8, 'car08.jpg', NOW()),
+(9, 9, 'car09.jpg', NOW()),
+(10, 10, 'car10.jpg', NOW()),
+(11, 11, 'car11.jpg', NOW()),
+(12, 12, 'car12.jpg', NOW()),
+(13, 13, 'car13.jpg', NOW()),
+(14, 14, 'car14.jpg', NOW()),
+(15, 15, 'car15.jpg', NOW()),
+(16, 16, 'car01.jpg', NOW()),
+(17, 17, 'car02.jpg', NOW()),
+(18, 18, 'car03.jpg', NOW()),
+(19, 19, 'car04.jpg', NOW()),
+(20, 20, 'car05.jpg', NOW()),
+(21, 21, 'car06.jpg', NOW()),
+(22, 22, 'car07.jpg', NOW()),
+(23, 23, 'car08.jpg', NOW()),
+(24, 24, 'car09.jpg', NOW()),
+(25, 25, 'car10.jpg', NOW()),
+(26, 26, 'car11.jpg', NOW()),
+(27, 27, 'car12.jpg', NOW()),
+(28, 28, 'car13.jpg', NOW()),
+(29, 29, 'car14.jpg', NOW()),
+(30, 30, 'car15.jpg', NOW());
