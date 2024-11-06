@@ -71,6 +71,9 @@
 						</div>
 						
 						<div class="col">
+							<div th:if="${errorMessage}" class="alert alert-danger">
+								<span th:text="${errorMessage}"></span>
+							</div>
 							<div class="d-flex justify-content-between flex-wrap">
 								<p th:if="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件' + '(' + (carPage.getNumber() + 1) + '/' + carPage.getTotalPages() + 'ページ)'}"></p>
 								<p th:unless="${carPage.getTotalPages() > 1}" class="fs-5 mb-3" th:text="${'検索結果：' + carPage.getTotalElements() + '件'}"></p>
@@ -87,7 +90,7 @@
 							</div>
 							
 							<div class="mb-3" th:each="car : ${carPage}">
-								<a href="#" class="link-dark tm-card-link">
+								<a th:href="@{/cars/__${car.id}__}" class="link-dark tm-card-link">
 									<div class="card h-100">
 										<div class="row g-0">
 											<div class="col-md-4">

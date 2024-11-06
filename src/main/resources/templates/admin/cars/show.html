@@ -46,7 +46,7 @@
 									  <!--画像-->
 								    <div class="carousel-item" th:each="image, iterStat : ${car.images}"
 								    		th:classappend="${iterStat.index == 0} ? 'active'">
-								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100" alt="...">
+								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100 slider-img" alt="車両画像">
 								    </div>
 								  </div>
 								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

@@ -25,7 +25,7 @@ INSERT IGNORE INTO users (id, name, furigana, postal_code, address, phone_number
 (19, '村田直美', 'ムラタナオミ', '310-0021', '茨城県水戸市南町', '080-8889-9999', 'murata@test.com', '012345678901', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true),
 (20, '吉田大輔', 'ヨシダダイスケ', '790-0012', '愛媛県松山市湊町', '080-1234-5679', 'yoshida@test.com', '109876543210', '$2a$10$2JNjTwZBwo7fprL2X4sv.OEKqxnVtsVQvuXDkI8xVGix.U3W5B7CO', 1, true);
 
--- cars テーブルに30台分のデータを挿入
+/* cars テーブルに30台分のデータを挿入 */
 INSERT IGNORE INTO cars (id, make, model, year, license_plate, type, rental_rate, status, created_at, updated_at) VALUES
 (1, 'Toyota', 'Corolla', '2020', '品川　あ　12-34', 'SEDAN', 1000, 'AVAILABLE', NOW(), NOW()),
 (2, 'Honda', 'Civic', '2021', '渋谷　あ　34-12', 'SEDAN', 1100, 'RENTED', NOW(), NOW()),
@@ -58,7 +58,7 @@ INSERT IGNORE INTO cars (id, make, model, year, license_plate, type, rental_rate
 (29, 'Honda', 'CR-V', '2023', '群馬　あ　12-34', 'SUV', 3800, 'AVAILABLE', NOW(), NOW()),
 (30, 'Toyota', 'Yaris', '2020', '茨城　あ　34-12', 'COMPACT', 3900, 'RENTED', NOW(), NOW());
 
--- car_images テーブルに30台分のデータを挿入
+/* car_images テーブルに30台分のデータを挿入 */
 INSERT IGNORE INTO car_images (id, car_id, image_url, created_at) VALUES
 (1, 1, 'car01.jpg', NOW()),
 (2, 2, 'car02.jpg', NOW()),
@@ -90,3 +90,70 @@ INSERT IGNORE INTO car_images (id, car_id, image_url, created_at) VALUES
 (28, 28, 'car13.jpg', NOW()),
 (29, 29, 'car14.jpg', NOW()),
 (30, 30, 'car15.jpg', NOW());
+
+/* reservations テーブルに30件分のデータを挿入 */
+INSERT IGNORE INTO reservations (id, user_id, car_id, start_date, end_date, amount, status, created_at, updated_at) VALUES
+(1, 1, 5, '2024-11-06 08:00:00', '2024-11-06 18:00:00', 20000, 'CONFIRMED', NOW(), NOW()),
+(2, 2, 8, '2024-11-06 09:30:00', '2024-11-08 11:30:00', 50000, 'PENDING', NOW(), NOW()),
+(3, 3, 3, '2024-11-06 10:00:00', '2024-11-07 12:00:00', 30000, 'CANCELLED', NOW(), NOW()),
+(4, 4, 1, '2024-11-07 14:00:00', '2024-11-09 18:00:00', 60000, 'COMPLETED', NOW(), NOW()),
+(5, 5, 7, '2024-11-06 15:00:00', '2024-11-08 17:00:00', 45000, 'CONFIRMED', NOW(), NOW()),
+(6, 6, 10, '2024-11-07 08:30:00', '2024-11-07 20:00:00', 25000, 'PENDING', NOW(), NOW()),
+(7, 7, 2, '2024-11-06 12:00:00', '2024-11-08 16:00:00', 70000, 'COMPLETED', NOW(), NOW()),
+(8, 8, 6, '2024-11-08 10:00:00', '2024-11-09 13:00:00', 35000, 'CONFIRMED', NOW(), NOW()),
+(9, 9, 9, '2024-11-07 13:30:00', '2024-11-07 19:00:00', 15000, 'CANCELLED', NOW(), NOW()),
+(10, 10, 12, '2024-11-06 08:00:00', '2024-11-07 20:00:00', 80000, 'PENDING', NOW(), NOW()),
+(11, 11, 4, '2024-11-07 11:00:00', '2024-11-08 14:30:00', 40000, 'CONFIRMED', NOW(), NOW()),
+(12, 12, 14, '2024-11-06 10:30:00', '2024-11-08 13:45:00', 55000, 'COMPLETED', NOW(), NOW()),
+(13, 13, 11, '2024-11-06 14:00:00', '2024-11-08 10:00:00', 30000, 'PENDING', NOW(), NOW()),
+(14, 14, 3, '2024-11-08 08:30:00', '2024-11-10 10:00:00', 75000, 'CANCELLED', NOW(), NOW()),
+(15, 15, 1, '2024-11-07 09:00:00', '2024-11-09 20:00:00', 65000, 'COMPLETED', NOW(), NOW()),
+(16, 16, 13, '2024-11-07 13:15:00', '2024-11-09 15:30:00', 50000, 'CONFIRMED', NOW(), NOW()),
+(17, 17, 15, '2024-11-06 16:00:00', '2024-11-07 11:00:00', 25000, 'PENDING', NOW(), NOW()),
+(18, 18, 2, '2024-11-06 08:45:00', '2024-11-06 19:30:00', 20000, 'CANCELLED', NOW(), NOW()),
+(19, 19, 5, '2024-11-07 14:30:00', '2024-11-08 17:30:00', 60000, 'COMPLETED', NOW(), NOW()),
+(20, 20, 14, '2024-11-06 10:00:00', '2024-11-06 18:00:00', 20000, 'CONFIRMED', NOW(), NOW()),
+(21, 21, 7, '2024-11-08 09:30:00', '2024-11-08 15:30:00', 15000, 'COMPLETED', NOW(), NOW()),
+(22, 22, 10, '2024-11-06 12:00:00', '2024-11-07 18:00:00', 40000, 'PENDING', NOW(), NOW()),
+(23, 23, 13, '2024-11-07 15:00:00', '2024-11-08 19:00:00', 30000, 'CONFIRMED', NOW(), NOW()),
+(24, 24, 6, '2024-11-06 14:15:00', '2024-11-06 18:30:00', 18000, 'CANCELLED', NOW(), NOW()),
+(25, 25, 11, '2024-11-08 08:00:00', '2024-11-09 20:00:00', 75000, 'COMPLETED', NOW(), NOW()),
+(26, 26, 2, '2024-11-06 09:45:00', '2024-11-07 17:30:00', 45000, 'PENDING', NOW(), NOW()),
+(27, 27, 12, '2024-11-07 12:15:00', '2024-11-09 16:00:00', 65000, 'CONFIRMED', NOW(), NOW()),
+(28, 28, 4, '2024-11-06 11:30:00', '2024-11-06 16:30:00', 22000, 'CANCELLED', NOW(), NOW()),
+(29, 29, 9, '2024-11-08 10:45:00', '2024-11-10 12:00:00', 90000, 'COMPLETED', NOW(), NOW()),
+(30, 30, 15, '2024-11-07 08:30:00', '2024-11-09 19:45:00', 80000, 'PENDING', NOW(), NOW());
+
+
+/* payments テーブルに30件分のデータを挿入 */
+INSERT IGNORE INTO payments (id, reservation_id, amount, payment_method, payment_date, status, created_at, updated_at) VALUES
+(1, 1, 20000, 'CREDIT_CARD', '2024-11-06 18:30:00', 'PAID', NOW(), NOW()),
+(2, 2, 50000, 'BANK_TRANSFER', '2024-11-08 12:00:00', 'PENDING', NOW(), NOW()),
+(3, 3, 30000, 'CASH', '2024-11-07 15:45:00', 'REFUNDED', NOW(), NOW()),
+(4, 4, 60000, 'CREDIT_CARD', '2024-11-09 19:30:00', 'PAID', NOW(), NOW()),
+(5, 5, 45000, 'CASH', '2024-11-08 18:00:00', 'FAILED', NOW(), NOW()),
+(6, 6, 25000, 'BANK_TRANSFER', '2024-11-07 20:00:00', 'PENDING', NOW(), NOW()),
+(7, 7, 70000, 'CREDIT_CARD', '2024-11-08 17:00:00', 'PAID', NOW(), NOW()),
+(8, 8, 35000, 'CASH', '2024-11-09 14:00:00', 'PAID', NOW(), NOW()),
+(9, 9, 15000, 'BANK_TRANSFER', '2024-11-07 19:30:00', 'REFUNDED', NOW(), NOW()),
+(10, 10, 80000, 'CREDIT_CARD', '2024-11-07 21:00:00', 'PENDING', NOW(), NOW()),
+(11, 11, 28000, 'CASH', '2024-11-06 17:30:00', 'PAID', NOW(), NOW()),
+(12, 12, 40000, 'CREDIT_CARD', '2024-11-09 12:30:00', 'PAID', NOW(), NOW()),
+(13, 13, 22000, 'BANK_TRANSFER', '2024-11-06 20:00:00', 'PENDING', NOW(), NOW()),
+(14, 14, 35000, 'CREDIT_CARD', '2024-11-08 13:00:00', 'PAID', NOW(), NOW()),
+(15, 15, 56000, 'CASH', '2024-11-08 18:00:00', 'FAILED', NOW(), NOW()),
+(16, 16, 27000, 'BANK_TRANSFER', '2024-11-07 18:00:00', 'PENDING', NOW(), NOW()),
+(17, 17, 30000, 'CREDIT_CARD', '2024-11-09 15:30:00', 'PAID', NOW(), NOW()),
+(18, 18, 33000, 'CASH', '2024-11-08 17:15:00', 'PAID', NOW(), NOW()),
+(19, 19, 40000, 'BANK_TRANSFER', '2024-11-07 20:30:00', 'REFUNDED', NOW(), NOW()),
+(20, 20, 45000, 'CREDIT_CARD', '2024-11-07 19:30:00', 'PENDING', NOW(), NOW()),
+(21, 21, 35000, 'CASH', '2024-11-09 14:00:00', 'PAID', NOW(), NOW()),
+(22, 22, 25000, 'BANK_TRANSFER', '2024-11-07 19:00:00', 'PAID', NOW(), NOW()),
+(23, 23, 42000, 'CREDIT_CARD', '2024-11-08 20:00:00', 'PAID', NOW(), NOW()),
+(24, 24, 32000, 'CASH', '2024-11-08 18:30:00', 'FAILED', NOW(), NOW()),
+(25, 25, 35000, 'BANK_TRANSFER', '2024-11-08 15:00:00', 'PENDING', NOW(), NOW()),
+(26, 26, 42000, 'CREDIT_CARD', '2024-11-08 16:00:00', 'PAID', NOW(), NOW()),
+(27, 27, 33000, 'CASH', '2024-11-09 13:30:00', 'PAID', NOW(), NOW()),
+(28, 28, 50000, 'BANK_TRANSFER', '2024-11-07 20:30:00', 'PENDING', NOW(), NOW()),
+(29, 29, 38000, 'CREDIT_CARD', '2024-11-08 14:30:00', 'PAID', NOW(), NOW()),
+(30, 30, 47000, 'CASH', '2024-11-08 17:30:00', 'PAID', NOW(), NOW());

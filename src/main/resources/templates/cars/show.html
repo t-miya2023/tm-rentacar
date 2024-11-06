@@ -41,7 +41,7 @@
 									  <!--画像-->
 								    <div class="carousel-item" th:each="image, iterStat : ${car.images}"
 								    		th:classappend="${iterStat.index == 0} ? 'active'">
-								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100" alt="...">
+								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100 slider-img" alt="車両画像">
 								    </div>
 								  </div>
 								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -71,37 +71,46 @@
 										
 										<div class="row pb-2 mb-2 border-bottom">
 											<div class="col-4">
-												<spna class="fw-bold">メーカー</spna>
+												<spna class="fw-bold">車種</spna>
 											</div>
 											<div class="col">
-												<span th:text="${car.make}"></span>
+												<span th:text="${car.model}"></span>
 											</div>
 										</div>
 										
 										<div class="row pb-2 mb-2 border-bottom">
 											<div class="col-4">
-												<spna class="fw-bold">メーカー</spna>
+												<spna class="fw-bold">年式</spna>
 											</div>
 											<div class="col">
-												<span th:text="${car.make}"></span>
+												<span th:text="${car.year} +'年'"></span>
 											</div>
 										</div>
 										
 										<div class="row pb-2 mb-2 border-bottom">
 											<div class="col-4">
-												<spna class="fw-bold">メーカー</spna>
+												<spna class="fw-bold">タイプ</spna>
 											</div>
 											<div class="col">
-												<span th:text="${car.make}"></span>
+												<span th:text="${car.type.name}"></span>
 											</div>
 										</div>
 										
 										<div class="row pb-2 mb-2 border-bottom">
 											<div class="col-4">
-												<spna class="fw-bold">メーカー</spna>
+												<spna class="fw-bold">料金</spna>
 											</div>
 											<div class="col">
-												<span th:text="${car.make}"></span>
+												<span th:text="${#numbers.formatInteger(car.rentalRate, 1, 'COMMA') + '円 / 時間'}"></span>
+											</div>
+										</div>
+									</div>
+									
+									<div class="col-lg-4 px-0 ps-lg-4 mb-4" sec:authorize="isAnonymous()">
+										<div class="card">
+											<div class="card-body">
+												<p class="card-text">予約するには<a th:href="@{/login}">ログイン</a>が必要です。</p>
+												<button type="submit" class="btn text-white shadow-sm w-100 tm-btn" disabled>予約する</button>
 											</div>
 										</div>
 									</div>

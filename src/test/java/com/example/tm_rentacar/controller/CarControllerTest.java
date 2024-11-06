@@ -34,4 +34,19 @@ public class CarControllerTest {
 				.andExpect(status().isOk())
 				.andExpect(view().name("cars/index"));
 	}
+//show---------------------------------------------------------------------------
+		@Test
+		public void 未ログイン状態でも車両詳細ページが正しく表示される() throws Exception{
+			mockMvc.perform(get("/cars/1"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("cars/show"));
+		}
+		
+		@Test
+		@WithUserDetails("testuser@test.com")
+		public void ログイン済みでも車両詳細ページが正しく表示される() throws Exception{
+			mockMvc.perform(get("/cars/1"))
+					.andExpect(status().isOk())
+					.andExpect(view().name("cars/show"));
+		}
 }

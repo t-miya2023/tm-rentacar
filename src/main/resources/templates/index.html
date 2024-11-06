@@ -26,7 +26,7 @@
 					<h2 class="text-center mb-3">新着</h2>
                     <div class="row row-cols-lg-5 row-cols-2 g-3 mb-5">
 						<div class="col" th:each="newCar : ${newCars}">
-							<a href="#" class="link-dark tm-card-link">
+							<a th:href="@{/cars/__${newCar.id}__}" class="link-dark tm-card-link">
 								<div class="card h-100">
 									<img th:unless="${#lists.isEmpty(newCar.images)}" th:src="@{/storage/__${newCar.images[0].imageUrl}__}" class="card-img-top tm-vertical-card-image" alt="車両画像">
 									<img th:if="${#lists.isEmpty(newCar.images)}" th:src="@{/images/no_images.png}" class="card-img-top tm-vertical-card-image" alt="No IMAGE">

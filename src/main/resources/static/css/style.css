@@ -110,6 +110,10 @@ h3{
 	object-fit: contain;
 }
 
+.slider-img{
+	max-height: 500px;
+	object-fit: cover;
+}
 .tm-sort-box{
 	width: 150px;
 }
