@@ -2,6 +2,7 @@ package com.example.tm_rentacar.service;
 
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -88,6 +89,11 @@ public class CarService {
 	//全ての車両データをページングされた状態で取得,料金の安い順に並び替え
 	public Page<Car> findAllCarByOrderByRentalRateAsc(Pageable pageable){
 		return carRepository.findAllByOrderByRentalRateAsc(pageable);
+	}
+	
+	//新しい順に10件の車両を取得する
+	public List<Car> findTop10CarsByCreatedAtDesc(){
+		return carRepository.findTop10ByOrderByCreatedAtDesc();
 	}
 	
 //Createメソッド---------------------------------------------------------

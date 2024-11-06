@@ -1,6 +1,7 @@
 package com.example.tm_rentacar.repository;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,4 +22,5 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
 	public Page<Car> findByRentalRateLessThanEqualOrderByRentalRateAsc(BigDecimal rentalRate, Pageable pageable);
 	public Page<Car> findAllByOrderByCreatedAtDesc(Pageable pageable);
 	public Page<Car> findAllByOrderByRentalRateAsc(Pageable pageable);
+	public List<Car> findTop10ByOrderByCreatedAtDesc();
 }

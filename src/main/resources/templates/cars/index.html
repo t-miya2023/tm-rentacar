@@ -91,8 +91,8 @@
 									<div class="card h-100">
 										<div class="row g-0">
 											<div class="col-md-4">
-												<img th:if="${!#lists.isEmpty(car.images)}" th:src="@{/storage/__${car.images[0].imageUrl}__}" loading="lazy" class="card-img-top tm-horizontal-card-image" alt="車両画像">
-												<img th:unless="${!#lists.isEmpty(car.images)}" th:src="@{/images/no_images.png}" class="card-img-top tm-horizontal-card-image no-image" alt="NO IMAGE">
+												<img th:unless="${#lists.isEmpty(car.images)}" th:src="@{/storage/__${car.images[0].imageUrl}__}" loading="lazy" class="card-img-top tm-horizontal-card-image" alt="車両画像">
+												<img th:if="${#lists.isEmpty(car.images)}" th:src="@{/images/no_images.png}" class="card-img-top tm-horizontal-card-image no-image" alt="NO IMAGE">
 											</div>
 											<div class="col-md-8">
 												<div class="card-body">

@@ -1,6 +1,7 @@
 package com.example.tm_rentacar.controller;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,8 +10,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tm_rentacar.entity.Car;
 import com.example.tm_rentacar.enums.CarType;
@@ -68,5 +71,21 @@ public class CarController {
 		model.addAttribute("order", order);
 		
 		return "cars/index";
+	}
+	
+	@GetMapping("/{id}")
+	public String show(@PathVariable(name = "id") Integer id, RedirectAttributes redirectAttributes, Model model) {
+		Optional<Car> optionalCar = carService.findCarById(id);
+		
+		if(optionalCar.isEmpty()) {
+			redirectAttributes.addFlashAttribute("errorMessage", "対象の車両が存在しません。");
+		
+			return "redirect:/cars";
+		}
+		
+		Car car = optionalCar.get();
+		model.addAttribute("car", car);
+		
+		return "cars/show";
 	}
 }

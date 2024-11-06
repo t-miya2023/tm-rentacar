@@ -22,6 +22,38 @@
                     <div th:if="${successMessage}" class="alert alert-info">
                         <span th:text="${successMessage}"></span>
                     </div>
+                    
+					<h2 class="text-center mb-3">新着</h2>
+                    <div class="row row-cols-lg-5 row-cols-2 g-3 mb-5">
+						<div class="col" th:each="newCar : ${newCars}">
+							<a href="#" class="link-dark tm-card-link">
+								<div class="card h-100">
+									<img th:unless="${#lists.isEmpty(newCar.images)}" th:src="@{/storage/__${newCar.images[0].imageUrl}__}" class="card-img-top tm-vertical-card-image" alt="車両画像">
+									<img th:if="${#lists.isEmpty(newCar.images)}" th:src="@{/images/no_images.png}" class="card-img-top tm-vertical-card-image" alt="No IMAGE">
+									<div class="card-body">
+										<h3 class="card-title" th:text="${newCar.model}"></h3>
+										<p class="card-text mb-1">
+											<small class="text-muted" th:text="${newCar.make}"></small>
+										</p>
+										<p class="card-text mb-1">
+											<small class="text-muted" th:text="${newCar.year} + '年式'"></small>
+										</p>
+										<p class="card-text">
+											<span th:text="${#numbers.formatInteger(newCar.rentalRate, 1, 'COMMA') + '円 / 時間'}"></span>
+										</p>
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="row justify-content-center">
+						<div class="col-xl-5 col-lg-6 col-md-8">
+							<h2 class="text-center mb-3">タイプから探す</h2>
+							
+						</div>
+					</div>
+                    
                 </div>
             </main>
 

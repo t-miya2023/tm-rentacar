@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+		<div th:replace="~{fragment :: meta}"></div>
+		<div th:replace="~{fragment :: link}"></div>
+        <title>TMレンタカー | 車両詳細</title>
+    </head>
+    <body>
+        <div class="tm-wrapper">
+			<div th:replace="~{fragment :: header}"></div>
+
+            <main>
+                <div class="container pt-4 pb-5 tm-container">
+					<div class="row justify-content-center">
+						<div class="col-xxl-9 col-xl-10 col-lg11">
+							<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+								<ol class="breadcrumb mb-0">
+									<li class="breadcrumb-item"><a th:href="@{/}">ホーム</a></li>
+									<li class="breadcrumb-item"><a th:href="@{/cars}">車両一覧</a></li>
+									<li class="breadcrumb-item active" aria-current="page">車両詳細</li>
+								</ol>
+							</nav>
+							
+							<h1 class="mb-4 text-center" th:text="${car.model}"></h1>
+						
+							<div class="mb-4">
+								<div th:unless="${#lists.isEmpty(car.images)}" id="carouselExampleIndicators" class="carousel slide">
+								  <div class="carousel-indicators">
+									  <!--インジケータ-->
+								    <button type="button" data-bs-target="#carouselExampleIndicators" 
+								    		th:each="image, iterStat : ${car.images}"
+								    		th:data-bs-slide-to="${iterStat.index}" 
+								    		th:classappend="${iterStat.index == 0} ? 'active'" 
+								    		th:aria-current="${iterStat.index == 0} ? 'true'" 
+								    		th:aria-label="'Slide ' + ${iterStat.index + 1}">
+								    </button>
+								    
+								  </div>
+								  
+								  <div class="carousel-inner">
+									  <!--画像-->
+								    <div class="carousel-item" th:each="image, iterStat : ${car.images}"
+								    		th:classappend="${iterStat.index == 0} ? 'active'">
+								      <img th:src="@{/storage/__${image.imageUrl}__}" class="d-block w-100" alt="...">
+								    </div>
+								  </div>
+								  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+								    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Previous</span>
+								  </button>
+								  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+								    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+								    <span class="visually-hidden">Next</span>
+								  </button>
+								</div>
+								<!--画像が登録されていない場合-->
+								<img th:if="${#lists.isEmpty(car.images)}" th:src="@{/images/no_images.png}" class="w-100" alt="No Image">
+							</div>
+							
+							<div class="container">
+								<div class="row">
+									<div class="col-lg-8 container mb-4">
+										<div class="row pb-2 mb-2 border-bottom">
+											<div class="col-4">
+												<spna class="fw-bold">メーカー</spna>
+											</div>
+											<div class="col">
+												<span th:text="${car.make}"></span>
+											</div>
+										</div>
+										
+										<div class="row pb-2 mb-2 border-bottom">
+											<div class="col-4">
+												<spna class="fw-bold">メーカー</spna>
+											</div>
+											<div class="col">
+												<span th:text="${car.make}"></span>
+											</div>
+										</div>
+										
+										<div class="row pb-2 mb-2 border-bottom">
+											<div class="col-4">
+												<spna class="fw-bold">メーカー</spna>
+											</div>
+											<div class="col">
+												<span th:text="${car.make}"></span>
+											</div>
+										</div>
+										
+										<div class="row pb-2 mb-2 border-bottom">
+											<div class="col-4">
+												<spna class="fw-bold">メーカー</spna>
+											</div>
+											<div class="col">
+												<span th:text="${car.make}"></span>
+											</div>
+										</div>
+										
+										<div class="row pb-2 mb-2 border-bottom">
+											<div class="col-4">
+												<spna class="fw-bold">メーカー</spna>
+											</div>
+											<div class="col">
+												<span th:text="${car.make}"></span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </main>
+
+			<div th:replace="~{fragment :: footer}"></div>
+        </div>
+
+        <div th:replace="~{fragment :: scripts}"></div>
+    </body>
+</html>
