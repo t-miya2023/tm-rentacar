@@ -67,7 +67,6 @@ CREATE TABLE IF NOT EXISTS verification_tokens (
  CREATE TABLE IF NOT EXISTS payments (
  	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
  	reservation_id INT NOT NULL,
- 	amount DECIMAL NOT NULL,
  	payment_method VARCHAR(50) NOT NULL,
  	payment_date DATETIME NOT NULL,
  	status VARCHAR(50) NOT NULL,

@@ -1,5 +1,11 @@
 package com.example.tm_rentacar.entity;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
+import com.example.tm_rentacar.enums.PaymentMethod;
+import com.example.tm_rentacar.enums.PaymentStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,4 +28,19 @@ public class Payment {
 	@OneToOne
 	@JoinColumn(name = "reservation_id")
 	private Reservation reservation;
+	
+	@Column(name = "payment_method")
+	private PaymentMethod paymentMethod;
+	
+	@Column(name = "payment_date")
+	private LocalDateTime paymentDate;
+	
+	@Column(name = "status")
+	private PaymentStatus paymentStatus;
+	
+	@Column(name = "created_at", insertable = false, updatable = false)
+	private Timestamp createdAt;
+	
+	@Column(name = "updated_at", insertable = false, updatable = false)
+	private Timestamp updatedAt;
 }
