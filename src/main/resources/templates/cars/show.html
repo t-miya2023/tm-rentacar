@@ -3,6 +3,8 @@
     <head>
 		<div th:replace="~{fragment :: meta}"></div>
 		<div th:replace="~{fragment :: link}"></div>
+		<!-- Flatpickr -->
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> 
         <title>TMレンタカー | 車両詳細</title>
     </head>
     <body>
@@ -114,6 +116,27 @@
 											</div>
 										</div>
 									</div>
+									
+									<div sec:authorize="isAuthenticated()" class="col-lg-4 px-0 ps-lg-4 mb-4">
+										<div class="card">
+											<div class="card-body">
+												<form method="post" th:action="@{/cars/__${car.id}__/reservations/input}" th:object="${reservationInputForm}">
+													<div class="form-group mb-2">
+														<label for="fromStartDateToEndDate" class="col-form-label text-md-left fw-bold">利用日時を選択</label>
+														<div th:if="${#fields.hasErrors('startDate')}" class="text-danger s,all mb-2" th:errors="*{startDate}"></div>
+														<div th:if="${#fields.hasErrors('endDate')}" class="text-danger s,all mb-2" th:errors="*{endDate}"></div>
+														<input type="text" class="form-control" id="fromStartDateToEndDate" th:value="${previousDates}" readonly>
+														<input type="hidden" th:field="*{startDate}">
+														<input type="hidden" th:field="*{endDate}">
+													</div>
+													
+													<div class="form-group">
+														<button type="submit" class="btn text-white shadow-sm w-100 tm-btn">予約する</button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -125,5 +148,10 @@
         </div>
 
         <div th:replace="~{fragment :: scripts}"></div>
+        
+         <!-- Flatpickr -->
+         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+         <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ja.js"></script>
+         <script th:src="@{/js/flatpickr.js}"></script>   
     </body>
 </html>

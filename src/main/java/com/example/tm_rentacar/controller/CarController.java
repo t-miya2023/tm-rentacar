@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.tm_rentacar.entity.Car;
 import com.example.tm_rentacar.enums.CarType;
+import com.example.tm_rentacar.form.ReservationInputForm;
 import com.example.tm_rentacar.service.CarService;
 
 @Controller
@@ -85,6 +86,7 @@ public class CarController {
 		
 		Car car = optionalCar.get();
 		model.addAttribute("car", car);
+		model.addAttribute("reservationInputForm", new ReservationInputForm());
 		
 		return "cars/show";
 	}
