@@ -7,7 +7,9 @@ flatpickr('#fromStartDateToEndDate', {
 	minDate: 'today',
 	maxDate: maxDate,
 	enableTime: true,
-	dateFormat: "m/d H:i",
+	dateFormat: "Y-m-d-H-i",
+	altInput: true,
+	altFormat: "m/d H:i",
 	minuteIncrement: 30,
 	onClose: function(selectedDates, dateStr, instance){
 		const dates = dateStr.split(" から ");
