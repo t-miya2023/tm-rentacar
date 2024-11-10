@@ -29,6 +29,7 @@ import com.example.tm_rentacar.form.ReservationInputForm;
 import com.example.tm_rentacar.security.UserDetailsImpl;
 import com.example.tm_rentacar.service.CarService;
 import com.example.tm_rentacar.service.ReservationService;
+import com.example.tm_rentacar.service.StripeService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -36,10 +37,12 @@ import jakarta.servlet.http.HttpSession;
 public class ReservationController {
 	private final ReservationService reservationService;
 	private final CarService carService;
+	private final StripeService stripeService;
 	
-	public ReservationController(ReservationService reservationService, CarService carService) {
+	public ReservationController(ReservationService reservationService, CarService carService, StripeService stripeService) {
 		this.reservationService = reservationService;
 		this.carService = carService;
+		this.stripeService = stripeService;
 	}
 	
 	@GetMapping("/reservations")
@@ -106,7 +109,11 @@ public class ReservationController {
 	}
 	
 	@GetMapping("/reservations/confirm")
-	public String confirm(RedirectAttributes redirectAttributes, HttpSession httpSession, Model model) {
+	public String confirm(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl,
+						RedirectAttributes redirectAttributes, 
+						HttpSession httpSession, 
+						Model model)
+	{
 		//セッションからDTOを取得する
 		ReservationDto reservationDto = (ReservationDto)httpSession.getAttribute("reservationDto");
 	
@@ -116,8 +123,37 @@ public class ReservationController {
 			return "redirect:/cars";
 		}
 		
+		User user = userDetailsImpl.getUser();
+		
+		String sessionId = stripeService.createStripeSession(reservationDto, user); 
+		
 		model.addAttribute("reservationDto", reservationDto);
+		model.addAttribute("sessionId", sessionId);
 		
 		return "reservations/confirm";
 	}
+	
+//	@PostMapping("/reservations/create")
+//	public String create(@AuthenticationPrincipal UserDetailsImpl userDetailsImpl, 
+//						RedirectAttributes redirectAttributes,
+//						HttpSession httpSession)
+//	{
+//		//セッションからDTOを取得
+//		ReservationDto reservationDto = (ReservationDto)httpSession.getAttribute("reservationDto");
+//		
+//		if(reservationDto == null) {
+//			redirectAttributes.addFlashAttribute("errorMessage", "セッションがタイムアウトしました。もう一度予約内容を入力してください。");
+//		
+//			return "redirect:/cars";
+//		}
+//		
+//		User user =userDetailsImpl.getUser();
+//		reservationService.createReservation(reservationDto, user);
+//		
+//		//セッションからDTOを削除する
+//		httpSession.removeAttribute("reservationDto");
+//		
+//		return "redirect:/reservations?reserved";
+//	}
+	
 }

@@ -41,8 +41,8 @@
 										<td>
 											<a th:href="@{/cars/__${reservation.car.id}__}" th:text="${reservation.car.model}"></a>
 										</td>
-										<td th:text="${reservation.startDate}"></td>
-										<td th:text="${reservation.endDate}"></td>
+										<td th:text="${#temporals.format(reservation.startDate,'yyyy年MM月dd日 HH:mm')}"></td>
+										<td th:text="${#temporals.format(reservation.endDate,'yyyy年MM月dd日 HH:mm')}"></td>
 										<td th:text="${#numbers.formatInteger(reservation.amount, 1, 'COMMA') + '円'}"></td>
 										<td th:text="${reservation.reservationStatus.value}"></td>
 									</tr>

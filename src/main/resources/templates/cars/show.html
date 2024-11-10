@@ -25,6 +25,10 @@
 							
 							<h1 class="mb-4 text-center" th:text="${car.model}"></h1>
 						
+							<div th:if="${errorMessage}" class="alert alert-danger">
+								<span th:text="${errorMessage}"></span>
+							</div>
+						
 							<div class="mb-4">
 								<div th:unless="${#lists.isEmpty(car.images)}" id="carouselExampleIndicators" class="carousel slide">
 								  <div class="carousel-indicators">

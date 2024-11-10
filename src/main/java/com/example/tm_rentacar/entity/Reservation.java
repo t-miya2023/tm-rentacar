@@ -1,6 +1,5 @@
 package com.example.tm_rentacar.entity;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -42,7 +41,7 @@ public class Reservation {
 	private LocalDateTime endDate;
 	
 	@Column(name = "amount")
-	private BigDecimal amount; 
+	private Integer amount; 
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status")
