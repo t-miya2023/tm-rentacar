@@ -27,7 +27,6 @@ public class StripeWebhookController {
 	@PostMapping("/stripe/webhook")
 	public ResponseEntity<String> webhook(@RequestBody String payload, @RequestHeader("Stripe-Signature") String sigHeader){
 		Event event = null;
-		
 		try {
 			//リクエストの署名を検証し、認証済みのイベントを構築する。webhookSecretが一致しない場合は例外にスローされる。
 			event = Webhook.constructEvent(payload, sigHeader, webhookSecret);
@@ -40,6 +39,7 @@ public class StripeWebhookController {
 		if("checkout.session.completed".equals(event.getType())) {
 			//DBに登録するメソッド
 			stripeService.processSessionCompleted(event);
+			
 		}
 		//Webhookリクエストに対するレスポンスを返す
 		return new ResponseEntity<>("Success", HttpStatus.OK);

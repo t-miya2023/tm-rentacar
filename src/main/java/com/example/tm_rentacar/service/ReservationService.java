@@ -2,6 +2,7 @@ package com.example.tm_rentacar.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Map;
 import java.util.Optional;
@@ -64,6 +65,8 @@ public class ReservationService {
 //CREATE---------------------------------------------------------------------
 	@Transactional
 	public void createReservation(Map<String, String> sessionMetadata) {
+		final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); //日付のフォーマット
+		
 		Reservation reservation = new Reservation();
 		
 		Integer carId = Integer.valueOf(sessionMetadata.get("carId"));
@@ -76,8 +79,8 @@ public class ReservationService {
 		Optional<User> optionalUser = userRepository.findById(userId);
 		User user = optionalUser.orElseThrow(() -> new EntityNotFoundException("指定されたIDのユーザーが存在しません。"));
 		
-		LocalDateTime startDate = LocalDateTime.parse(sessionMetadata.get("startDate"));
-		LocalDateTime endDate = LocalDateTime.parse(sessionMetadata.get("endDate"));
+		LocalDateTime startDate = LocalDateTime.parse(sessionMetadata.get("startDate"), DATE_TIME_FORMATTER);
+		LocalDateTime endDate = LocalDateTime.parse(sessionMetadata.get("endDate"), DATE_TIME_FORMATTER);
 		Integer amount = Integer.valueOf(sessionMetadata.get("amount")); 
 		
 		reservation.setUser(user);

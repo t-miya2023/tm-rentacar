@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class WebSecurityConfig {
 //セキュリティ設定用メソッドの定義----------------------------------------
 	@Bean
-	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{ 
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{ 
 		http
 			// ----------- アクセス許可に関する設定-----------------
 			.authorizeHttpRequests((requests) -> requests 

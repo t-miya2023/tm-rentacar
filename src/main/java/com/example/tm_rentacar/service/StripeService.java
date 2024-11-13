@@ -37,7 +37,7 @@ public class StripeService {
 	private static final String CURRENCY = "jpy";// 通過
 	private static final long QUANTITY = 1L;//数量
 	private static final Mode MODE = SessionCreateParams.Mode.PAYMENT;//支払いモード
-	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"); //日付のフォーマット
+	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"); //日付のフォーマット
 	
 	//Stripeのシークレットキー
 	@Value("${stripe.api-key}")
@@ -105,7 +105,7 @@ public class StripeService {
 										.putMetadata("carId", carId)
 										.putMetadata("userId", userId)
 										.putMetadata("startDate", startDate)
-										.putMetadata("endData",endDate)
+										.putMetadata("endDate",endDate)
 										.putMetadata("amount", amount)
 										.build())
 									.build();
@@ -145,7 +145,11 @@ public class StripeService {
 		//EventオブジェクトからStripeオブジェクトを取得する
 		//Event->Stripeから通知されるイベントの内容を表現したオブジェクト
 		//StripeObject->StripeのAPIから返されるデータを表現する基本的なオブジェクト
-		Optional<StripeObject> optionalStripeObject = event.getDataObjectDeserializer().getObject();
+		Optional<StripeObject> optionalStripeObject = event.getDataObjectDeserializer().getObject().map(Session.class::cast);
+		
+
+		System.out.println(optionalStripeObject);
+
 		//stripeObjectが存在する場合と、存在しない場合の処理
 		optionalStripeObject.ifPresentOrElse(stripeObject -> {
 			// StripeObjectオブジェクトを型変換
@@ -156,9 +160,11 @@ public class StripeService {
 			try {
 				//支払い情報を含む詳細なセッション情報を取得する
 				session = Session.retrieve(session.getId(), sessionRetrieveParams, null);
+					System.out.println(session.getId());
 				//詳細なセッション情報からメタデータを取り出す。
 				Map<String, String> sessionMetadata = session.getPaymentIntentObject().getMetadata();
 				//予約情報をDBに登録する
+					System.out.println(sessionMetadata);
 				reservationService.createReservation(sessionMetadata);
 				
 				System.out.println("予約情報の登録処理が成功しました。");
@@ -179,6 +185,7 @@ public class StripeService {
 				System.out.println("Stripeとの通信中に予期せぬエラーが発生しました。");
 			}catch(Exception e) {
 				System.out.println("予約情報の登録処理中に予期せぬエラーが発生しました。");
+				System.out.println(e);
 			}
 		},
 		() -> {
