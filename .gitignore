@@ -13,8 +13,6 @@ target/
 .springBeans
 .sts4-cache
 
-# Ignore images folder
-images/
 
 # Ignore application.properties file
 application.properties
