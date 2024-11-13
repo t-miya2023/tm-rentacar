@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.tm_rentacar.entity.Car;
+import com.example.tm_rentacar.enums.CarType;
 import com.example.tm_rentacar.service.CarService;
 
 @Controller
@@ -22,6 +23,7 @@ public class HomeController {
 		
 		List<Car> newCars = carService.findTop10CarsByCreatedAtDesc();
 		model.addAttribute("newCars", newCars);
+		model.addAttribute("carTypes", CarType.values());
 		
 		return "index";
 	}

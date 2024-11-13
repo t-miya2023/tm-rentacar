@@ -10,6 +10,47 @@
 			<div th:replace="~{fragment :: header}"></div>
 
             <main>
+				 <div id="carouselExampleCaptions" class="carousel slide mb-3">
+					  <div class="carousel-indicators">
+					    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+					    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+					    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+					  </div>
+					  <div class="carousel-inner top-slide">
+					    <div class="carousel-item active top-slide">
+					      <img th:src="@{/images/top1.jpg}" class="d-block w-100" alt="top">
+					      <div class="carousel-caption d-none d-md-block">
+					        <h5>TM レンタカー</h5>
+					        <p>長野県諏訪市にあるスポーツカー専門レンタカー屋さんです</p>
+					      </div>
+					    </div>
+					    <div class="carousel-item top-slide">
+					      <img th:src="@{/images/top2.jpg}" class="d-block w-100" alt="top">
+					      <div class="carousel-caption d-none d-md-block">
+					        <h5>TM RENT A CAR</h5>
+					        <p>A sports car rental shop in Suwa City, Nagano Prefecture.</p>
+					      </div>
+					    </div>
+					    <div class="carousel-item top-slide">
+					      <img th:src="@{/images/top3.jpg}" class="d-block w-100" alt="top">
+					      <div class="carousel-caption d-none d-md-block">
+					        <h5>TM レンタカー</h5>
+					        <p>多彩な車をご用意しております。</p>
+					      </div>
+					    </div>
+					  </div>
+					  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+					    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Previous</span>
+					  </button>
+					  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+					    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+					    <span class="visually-hidden">Next</span>
+					  </button>
+					</div>    
+				
+				
+				
                 <div class="container pt-4 pb-5 tm-container">
                     <div th:if="${param.loggedIn}" class="alert alert-info">
                         ログインしました。
@@ -22,6 +63,11 @@
                     <div th:if="${successMessage}" class="alert alert-info">
                         <span th:text="${successMessage}"></span>
                     </div>
+                    
+               
+                    
+                    
+                    
                     
 					<h2 class="text-center mb-3">新着</h2>
                     <div class="row row-cols-lg-5 row-cols-2 g-3 mb-5">
@@ -48,9 +94,17 @@
 					</div>
 					
 					<div class="row justify-content-center">
-						<div class="col-xl-5 col-lg-6 col-md-8">
-							<h2 class="text-center mb-3">タイプから探す</h2>
-							
+						<h2 class="text-center mb-3">タイプから探す</h2>
+						<div class="col-xl-5 col-lg-6 col-md-8 mb-2" th:each="carType : ${carTypes}">
+							<a th:href="@{/cars?type=__${carType}__}" class="link-dark tm-card-link">
+								<div class="card h-100">
+									
+									<div class="card-body">
+										<h3 class="card-title text-center" th:text="${carType.name}"></h3>
+
+									</div>
+								</div>
+							</a>
 						</div>
 					</div>
                     
